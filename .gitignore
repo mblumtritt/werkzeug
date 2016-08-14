@@ -1,0 +1,5 @@
+*.lock
+tmp/
+local/
+pkg/
+coverage/
