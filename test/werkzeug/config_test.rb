@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class ConfigTest < StandardTest
+class ConfigTest < Test
   def test_thread_count
     assert_same(
       Werkzeug::Config.suggested_thread_count,

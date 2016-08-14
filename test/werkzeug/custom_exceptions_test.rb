@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class CustomExceptionTest < StandardTest
+class CustomExceptionTest < Test
   def test_standard
     mod = Module.new do
       extend Werkzeug::CustomExceptions

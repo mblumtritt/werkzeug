@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class EventsTest < StandardTest
+class EventsTest < Test
   def test_register
     events = Werkzeug::Events.new
     received = []
