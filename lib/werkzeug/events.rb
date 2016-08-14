@@ -2,8 +2,8 @@ require_relative 'error'
 
 module Werkzeug
   class Events
-    def self.global
-      @global ||= new
+    def self.default
+      @default ||= new
     end
 
     def initialize

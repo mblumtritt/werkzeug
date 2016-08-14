@@ -22,6 +22,6 @@ module Werkzeug
   end
 
   def self.events
-    Events.global
+    Events.default
   end
 end
