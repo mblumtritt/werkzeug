@@ -1,4 +1,4 @@
-require_relative 'config'
+require_relative 'error'
 
 module Werkzeug
   module DataFile
@@ -9,7 +9,7 @@ module Werkzeug
     end
 
     def self.parse(lines)
-      Error::MethodExpected.raise!('#each_line') unless defined?(lines.each_line)
+      Error::MethodExpected.raise!(:each_line) unless lines.respond_to?(:each_line)
       ret, name, content = {}, :default, []
       lines.each_line do |line|
         next content << line unless line.start_with?('@@ '.freeze)
