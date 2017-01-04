@@ -1,5 +1,5 @@
 module Werkzeug
-  ROOT = __FILE__.gsub(/\.rb$/, '').freeze
+  ROOT = __FILE__[0..-4].freeze
   autoload :VERSION, "#{ROOT}/version"
   autoload :CustomExceptions, "#{ROOT}/custom_exceptions"
   autoload :Config, "#{ROOT}/config"
