@@ -9,7 +9,7 @@ class EventsTest < Test
       received << event
       received_args << args
     end
-    events.fire(:not_described, 42)
+    events.fire(:not_subscribed, 42)
     events.fire(:second, 2, 22, 222)
     events.fire(:first, 1, 11)
     assert_equal([:second, :first], received)
@@ -22,10 +22,10 @@ class EventsTest < Test
     events.register(:any) do |event, *_|
       received << event
     end
-    events.fire(:not_described)
-    events.fire(:second)
     events.fire(:first)
-    assert_equal([:not_described, :second, :first], received)
+    events.fire(:second)
+    events.fire(:thirth)
+    assert_equal([:first, :second, :thirth], received)
   end
 
   def test_unregister
