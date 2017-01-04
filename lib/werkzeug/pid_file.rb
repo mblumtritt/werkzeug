@@ -3,7 +3,6 @@ require_relative 'custom_exceptions'
 module Werkzeug
   module PidFile
     DEFAULT_FILE_NAME = "/var/tmp/#{File.basename($PROGRAM_NAME)}.pid".freeze
-    FLOCK_FLAGS = File::LOCK_EX | File::LOCK_NB
 
     class Error < StandardError
       extend CustomExceptions
@@ -18,8 +17,7 @@ module Werkzeug
       end
 
       def pid_or_create(file_name)
-        pid = read_pid(file_name)
-        pid ? pid : create_file(file_name)
+        read_pid(file_name) || create_file(file_name)
       end
 
       def try_create(file_name = DEFAULT_FILE_NAME)
@@ -34,7 +32,7 @@ module Werkzeug
 
       def create_file(file_name)
         file = File.open(file_name, 'w'.freeze)
-        Error::FLock.raise!(file_name) unless file.flock(FLOCK_FLAGS)
+        Error::FLock.raise!(file_name) unless file.flock(File::LOCK_EX | File::LOCK_NB)
         file.puts(Process.pid)
         file.flush
         at_exit do
