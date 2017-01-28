@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
     'issue_tracker' => 'https://github.com/mblumtritt/werkzeug/issues'
   }
   spec.require_paths = %w(lib)
-  spec.test_files = FILES.grep(%r{^(spec|test)/})
+  spec.test_files = FILES.grep(%r{^test/})
   spec.files = FILES - spec.test_files
   spec.has_rdoc = false # not yet
   # spec.extra_rdoc_files = %w(README.md)
