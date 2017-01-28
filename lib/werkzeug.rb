@@ -8,6 +8,7 @@ module Werkzeug
   autoload :Events, "#{ROOT}/events"
   autoload :DataFile, "#{ROOT}/data_file"
   autoload :PidFile, "#{ROOT}/pid_file"
+  autoload :HostOS, "#{ROOT}/host_os"
 
   def self.configure
     yield(Config) if block_given?
@@ -23,5 +24,9 @@ module Werkzeug
 
   def self.events
     Events.default
+  end
+
+  def self.host_os
+    HostOS.type
   end
 end
