@@ -24,21 +24,18 @@ module Werkzeug
       Error::NoArgument.raise! if events.empty?
       Error::NoBlockGiven.raise! unless block
       id = block.__id__
-      events.uniq!
       @lock.synchronize{ _register(id, block, events) }
       id
     end
 
     def unregister(listener, *events)
       id = Integer === listener ? listener : listener.__id__
-      events.uniq!
       @lock.synchronize{ events.empty? ? _unregister_all(id) : _unregister(id, events) }
       id
     end
 
     def reset(*events)
       Error::NoArgument.raise! if events.empty?
-      events.uniq!
       @lock.synchronize{ _reset(events) }
     end
 
