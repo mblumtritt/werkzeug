@@ -11,7 +11,7 @@ module Werkzeug
     end
 
     def value
-      @lock.synchronize{ chore } unless complete?
+      @lock.synchronize{ chore } unless avail?
       error? ? raise(@error) : @value
     end
 
@@ -32,7 +32,7 @@ module Werkzeug
       set?(@error)
     end
 
-    def complete?
+    def avail?
       value? || error?
     end
 
@@ -43,7 +43,7 @@ module Werkzeug
     end
 
     def chore
-      return if complete?
+      return if avail?
       begin
         @value = @function.call(*@args)
       rescue Exception => error
