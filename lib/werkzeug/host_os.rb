@@ -20,16 +20,40 @@ module Werkzeug
       end
 
       def type
-        @type ||= find_type
+        @@type ||= find_type
+      end
+
+      def temp_dir
+        @@temp_dir ||= find_temp_dir
       end
 
       private
+
+      @@type = @@temp_dir = nil
 
       def find_type
         return :linux if linux?
         return :mac_os if mac_os?
         return :windows if windows?
         nil
+      end
+
+      def find_temp_dir
+        test_dir(ENV['TMPDIR']) ||
+          test_dir(ENV['TMP']) ||
+          test_dir(ENV['TEMP']) ||
+          test_dir('./tmp') ||
+          test_dir(defined?(Etc.systmpdir) ? Etc.systmpdir : '/tmp')
+      end
+
+      def test_dir(dir)
+        return nil unless dir
+        dir = File.expand_path(dir)
+        valid_dir?(dir) ? dir : nil
+      end
+
+      def valid_dir?(dir)
+        return (s = File.stat(dir) and s.directory? and s.writable? and (!s.world_writable? or s.sticky?)) rescue false
       end
     end
   end
