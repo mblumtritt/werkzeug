@@ -30,7 +30,7 @@ module Werkzeug
     end
 
     def unregister(listener, *events)
-      id = Numeric === listener ? listener : listener.__id__
+      id = Integer === listener ? listener : listener.__id__
       events.uniq!
       @lock.synchronize{ events.empty? ? _unregister_all(id) : _unregister(id, events) }
       id
