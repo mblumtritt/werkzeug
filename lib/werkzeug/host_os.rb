@@ -2,31 +2,33 @@
 
 module Werkzeug
   module HostOS
-    def self.name
-      RbConfig::CONFIG['host_os']
-    end
+    class << self
+      def name
+        RbConfig::CONFIG['host_os']
+      end
 
-    def self.linux?
-      /linux/.match?(name)
-    end
+      def linux?
+        /linux/.match?(name)
+      end
 
-    def self.mac_os?
-      /darwin|mac os/.match?(name)
-    end
+      def mac_os?
+        /darwin|mac os/.match?(name)
+      end
 
-    def self.windows?
-      /mswin|mingw|cygwin/.match?(name)
-    end
+      def windows?
+        /mswin|mingw|cygwin/.match?(name)
+      end
 
-    def self.type
-      @type ||= case
-      when linux?
-        :linux
-      when mac_os?
-        :mac_os
-      when windows?
-        :windows
-      else
+      def type
+        @type ||= find_type
+      end
+
+      private
+
+      def find_type
+        return :linux if linux?
+        return :mac_os if mac_os?
+        return :windows if windows?
         nil
       end
     end

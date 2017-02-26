@@ -5,25 +5,25 @@ module Werkzeug
     end
 
     def create_exception(parent = nil, format)
-      Class.new(_appropriate_parent(parent)) do
+      Class.new(appropriate_parent(parent)) do
+        const_set(:MESSAGE_FORMAT, format.to_s.dup.freeze)
         extend(Extensions)
-        const_set(:MESSAGE_FORMAT, format.dup.freeze)
       end
     end
 
     private
+
+    def appropriate_parent(obj)
+      return self < ::Exception ? self : ::StandardError if obj.nil?
+      return obj if obj.is_a?(::Class) && obj < ::Exception
+      raise(::TypeError, 'exception class required', caller(2))
+    end
 
     module Extensions
       def raise!(*args)
         message = format(self::MESSAGE_FORMAT, *args)
         raise(self, message, caller(1))
       end
-    end
-
-    def _appropriate_parent(obj)
-      return self < ::Exception ? self : ::StandardError if obj.nil?
-      return obj if obj.is_a?(::Class) && obj < ::Exception
-      raise(::TypeError, 'exception class required', caller(2))
     end
   end
 end
