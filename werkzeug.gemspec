@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.0.0'
   spec.name = spec.rubyforge_project = 'werkzeug'
   spec.version = Werkzeug::VERSION
-  spec.summary = 'Collection of every day tools for your projects.'
+  spec.summary = 'Collection of every day tools for Ruby projects.'
   spec.description = spec.summary
   spec.author = 'Mike Blumtritt'
   spec.email = 'mike.blumtritt@invision.de'
