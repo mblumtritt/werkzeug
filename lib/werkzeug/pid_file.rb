@@ -1,9 +1,8 @@
 require_relative 'custom_exceptions'
+require_relative 'host_os'
 
 module Werkzeug
   module PidFile
-    DEFAULT_FILE_NAME = "/var/tmp/#{File.basename($PROGRAM_NAME)}.pid".freeze
-
     class Error < StandardError
       extend CustomExceptions
       DuplicateProcess = create_exception('process already running - %u')
@@ -20,12 +19,17 @@ module Werkzeug
         read_pid(file_name) || create_file(file_name)
       end
 
-      def try_create(file_name = DEFAULT_FILE_NAME)
+      def try_create(file_name = default_file_name)
         pid_or_create(file_name).is_a?(String)
       end
 
-      def create(file_name = DEFAULT_FILE_NAME)
-        Error::DuplicateProcess.raise!(fpid) unless try_create(file_name)
+      def create(file_name = default_file_name)
+        pos = pid_or_create(file_name)
+        pos.is_a?(String) ? Error::DuplicateProcess.raise!(pos) : pos
+      end
+
+      def default_file_name
+        File.join(HostOS.temp_dir,"#{File.basename($PROGRAM_NAME)}.pid")
       end
 
       private
