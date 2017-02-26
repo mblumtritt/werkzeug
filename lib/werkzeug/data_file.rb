@@ -21,8 +21,10 @@ module Werkzeug
     end
 
     def self.default
-      @default ||= parse(DATA).freeze
+      @@default ||= parse(DATA).freeze
     end
+
+    @@default = nil
 
     def self.names
       default.keys
