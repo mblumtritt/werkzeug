@@ -29,7 +29,7 @@ module Werkzeug
       end
 
       def default_file_name
-        File.join(HostOS.temp_dir,"#{File.basename($PROGRAM_NAME)}.pid")
+        File.join(HostOS.temp_dir, "#{File.basename($PROGRAM_NAME)}.pid")
       end
 
       private
