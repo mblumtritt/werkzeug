@@ -11,7 +11,7 @@ module Werkzeug
   autoload :VERSION, "#{ROOT}/version"
 
   def self.configure
-    yield(Config) if block_given?
+    block_given? ? yield(Config) : Config 
   end
 
   def self.data_file
