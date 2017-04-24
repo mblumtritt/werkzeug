@@ -16,11 +16,11 @@ Gem::Specification.new do |spec|
   spec.metadata = {
     'issue_tracker' => 'https://github.com/mblumtritt/werkzeug/issues'
   }
-  spec.require_paths = %w(lib)
+  spec.require_paths = %w[lib]
   spec.test_files = FILES.grep(%r{^test/})
   spec.files = FILES - spec.test_files
   spec.has_rdoc = false # not yet
-  # spec.extra_rdoc_files = %w(README.md)
+  # spec.extra_rdoc_files = %w[README.md]
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'minitest'
