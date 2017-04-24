@@ -10,9 +10,13 @@ module Werkzeug
       ThreadPool.default.add(self)
     end
 
-    def value
+    def wait
       @lock.synchronize{ chore } unless avail?
-      error? ? raise(@error) : @value
+      self
+    end
+
+    def value
+      wait.error? ? raise(@error) : @value
     end
 
     def value?
