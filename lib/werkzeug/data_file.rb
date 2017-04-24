@@ -21,7 +21,7 @@ module Werkzeug
     end
 
     def self.default
-      @@default ||= parse(DATA).freeze
+      @@default ||= parse(defined?(::DATA) ? ::DATA : '').freeze
     end
 
     @@default = nil
