@@ -15,15 +15,6 @@ module Werkzeug
       error? ? raise(@error) : @value
     end
 
-    def call
-      return unless @lock.try_lock
-      begin
-        chore
-      ensure
-        @lock.unlock
-      end
-    end
-
     def value?
       set?(@value)
     end
@@ -34,6 +25,15 @@ module Werkzeug
 
     def avail?
       value? || error?
+    end
+
+    def call
+      return unless @lock.try_lock
+      begin
+        chore
+      ensure
+        @lock.unlock
+      end
     end
 
     private
