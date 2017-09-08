@@ -1,0 +1,25 @@
+PATH
+  remote: .
+  specs:
+    werkzeug (0.2.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.10.3)
+    minitest-proveit (1.0.0)
+      minitest (> 5, < 7)
+    rake (12.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler!
+  minitest!
+  minitest-proveit!
+  rake!
+  werkzeug!
+
+BUNDLED WITH
+   1.15.4
