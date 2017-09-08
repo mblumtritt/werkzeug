@@ -12,19 +12,19 @@ class DataFileTest < Test
   end
 
   def test_parse_files
-    result = Werkzeug::DataFile.parse <<-EOL
-default_line_1
-default_line_2
-default_line_3
-@@ file_2
-file_2_line_1
-file_2_line_2
-file_2_line_3
-@@ file_3
-file_3_line_1
-file_3_line_2
-file_3_line_3
-EOL
+    result = Werkzeug::DataFile.parse <<~EOL
+      default_line_1
+      default_line_2
+      default_line_3
+      @@ file_2
+      file_2_line_1
+      file_2_line_2
+      file_2_line_3
+      @@ file_3
+      file_3_line_1
+      file_3_line_2
+      file_3_line_3
+    EOL
     assert_equal(%i(default file_2 file_3), result.keys)
     assert_equal("default_line_1\ndefault_line_2\ndefault_line_3\n", result[:default])
     assert_equal("file_2_line_1\nfile_2_line_2\nfile_2_line_3\n", result[:file_2])

@@ -1,7 +1,7 @@
 require File.expand_path('../lib/werkzeug/version', __FILE__)
 
 Gem::Specification.new do |spec|
-  all_files = %x(git ls-files).split($/)
+  all_files = %x(git ls-files -z).split("\x0")
   spec.required_rubygems_version = Gem::Requirement.new('>= 1.3.6')
   spec.platform = Gem::Platform::RUBY
   spec.required_ruby_version = '>= 2.0.0'
@@ -21,4 +21,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'minitest-proveit'
 end
