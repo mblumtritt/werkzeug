@@ -25,7 +25,7 @@ module Werkzeug
 
       def create(file_name = default_file_name)
         pos = pid_or_create(file_name)
-        pos.is_a?(String) ? Error::DuplicateProcess.raise!(pos) : pos
+        pos.is_a?(String) ? pos : Error::DuplicateProcess.raise!(pos)
       end
 
       def default_file_name
@@ -47,8 +47,9 @@ module Werkzeug
       end
 
       def process_exists?(pid)
-        !!Process.kill(0, pid)
-      rescue Errno::ESRCH
+        Process.kill(0, pid)
+        true
+      rescue Errno::ESRCH, Errno::EPERM
         false
       end
     end
