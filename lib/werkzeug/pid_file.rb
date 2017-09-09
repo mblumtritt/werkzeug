@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'custom_exceptions'
 require_relative 'host_os'
 
@@ -35,7 +37,7 @@ module Werkzeug
       private
 
       def create_file(file_name)
-        file = File.open(file_name, 'w'.freeze)
+        file = File.open(file_name, 'w')
         Error::FLock.raise!(file_name) unless file.flock(File::LOCK_EX | File::LOCK_NB)
         file.puts(Process.pid)
         file.flush
@@ -49,7 +51,9 @@ module Werkzeug
       def process_exists?(pid)
         Process.kill(0, pid)
         true
-      rescue Errno::ESRCH, Errno::EPERM
+      rescue Errno::EPERM
+        true
+      rescue Errno::ESRCH
         false
       end
     end
