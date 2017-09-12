@@ -16,7 +16,15 @@ module Werkzeug
       end
 
       def windows?
-        /mswin|mingw|cygwin/.match?(name)
+        /msdos|mswin|djgpp|msys|mingw|cygwin|bccwin|wince|emc|windows/i.match?(name)
+      end
+
+      def unix?
+        /(aix|(net|free|open)bsd|solaris|irix|hpux)/i.match?(name)
+      end
+
+      def unix_like?
+        unix? || linux? || mac_os? || /cygwin/.match?(name)
       end
 
       def type
@@ -34,6 +42,7 @@ module Werkzeug
       def find_type
         return :linux if linux?
         return :mac_os if mac_os?
+        return :unix if unix?
         return :windows if windows?
         nil
       end
