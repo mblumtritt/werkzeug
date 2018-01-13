@@ -1,10 +1,15 @@
+# frozen_string_literal: true
+
 require File.expand_path('../lib/werkzeug/version', __FILE__)
 
 Gem::Specification.new do |spec|
   spec.name = 'werkzeug'
   spec.version = Werkzeug::VERSION
-  spec.summary = 'Collection of every day tools for Ruby projects.'
-  spec.description = spec.summary
+  spec.summary = 'Collection of every day tools for your Ruby projects.'
+  spec.description = <<~EOS
+    To reduce overhead and to avoid to re-invent often used patterns and helper classes this gem offers you a toolset
+    of optimized classes and helper methods. All parts are implemented with focus on fast code avoiding any overhead.
+  EOS
   spec.author = 'Mike Blumtritt'
   spec.email = 'mike.blumtritt@invision.de'
   spec.homepage = 'https://github.com/mblumtritt/werkzeug'
@@ -17,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-proveit'
 
   spec.platform = Gem::Platform::RUBY
-  spec.required_ruby_version = '>= 2.0.0'
+  spec.required_ruby_version = '>= 2.5.0'
   spec.required_rubygems_version = Gem::Requirement.new('>= 1.3.6')
 
   spec.require_paths = %w[lib]
@@ -26,6 +31,6 @@ Gem::Specification.new do |spec|
   spec.test_files = all_files.grep(%r{^test/})
   spec.files = all_files - spec.test_files
 
-  spec.has_rdoc = false # not yet
-  # spec.extra_rdoc_files = %w[README.md]
+  spec.has_rdoc = false # sorry...
+  spec.extra_rdoc_files = %w[README.md]
 end
