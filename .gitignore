@@ -1,5 +1,5 @@
-*.lock
+_local/
 tmp/
-local/
 pkg/
 coverage/
+gems.locked
