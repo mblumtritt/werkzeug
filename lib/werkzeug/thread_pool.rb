@@ -22,6 +22,12 @@ module Werkzeug
       item
     end
 
+    def run(&block)
+      return false unless block
+      add(block)
+      nil
+    end
+
     def join
       @lock.synchronize{ @condition.wait unless @threads.empty? }
     end
