@@ -9,28 +9,28 @@ To reduce overhead and to avoid to re-invent often used patterns and helper clas
 ### Features Overview
 
 <dl>
-  <dt>`CustomExceptions`</dt>
+  <dt>CustomExceptions</dt>
   <dd>Allows you to define hierarchies of exceptions with standard text.</dd>
 
-  <dt>`DataFile`</dt>
+  <dt>DataFile</dt>
   <dd>Offers access to `__DATA__` sections (like inline templates like in [Sinatra](https://github.com/sinatra/sinatra#inline-templates)).</dd>
 
-  <dt>'Events'</dt>
+  <dt>Events</dt>
   <dd>Implements an easy to use event subscription and handling algorithm.</dd>
 
-  <dt>`Future`</dt>
+  <dt>Future</dt>
   <dd>Powerful asynchronous code execution with a very small footprint. Uses `ThreadPool` (see below).</dd>
 
-  <dt>`HostOS`</dt>
+  <dt>HostOS</dt>
   <dd>Information about the underlying OS of your project.</dd>
 
-  <dt>`PidFile`</dt>
+  <dt>PidFile</dt>
   <dd>Allows to check and run a single instance of your application.</dd>
 
-  <dt>`ThreadPool`</dt>
+  <dt>ThreadPool</dt>
   <dd>Small but powerful thread pool implementation.</dd>
 
-  <dt>`ToolFunctions`</dt>
+  <dt>ToolFunctions</dt>
   <dd>A set of tool functions like `Enum` definition.</dd>
 </dl>
 
