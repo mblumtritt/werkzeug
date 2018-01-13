@@ -8,6 +8,7 @@ module Werkzeug
   autoload :HostOS, "#{ROOT}/host_os"
   autoload :PidFile, "#{ROOT}/pid_file"
   autoload :ThreadPool, "#{ROOT}/thread_pool"
+  autoload :ToolFunctions, "#{ROOT}/tool_functions"
   autoload :VERSION, "#{ROOT}/version"
 
   def self.configure
@@ -37,4 +38,10 @@ module Werkzeug
   def self.thread_pool
     ThreadPool.default
   end
+
+  def self.include_tools!
+    TOP.instance_exec{ include ToolFunctions }
+  end
 end
+
+Werkzeug::TOP = self
