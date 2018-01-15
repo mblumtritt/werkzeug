@@ -8,6 +8,7 @@ module Werkzeug
   autoload :HostOS, "#{ROOT}/host_os"
   autoload :PidFile, "#{ROOT}/pid_file"
   autoload :ThreadPool, "#{ROOT}/thread_pool"
+  autoload :SequenceFactory, "#{ROOT}/sequence_factory"
   autoload :ToolFunctions, "#{ROOT}/tool_functions"
   autoload :VERSION, "#{ROOT}/version"
 
@@ -37,6 +38,10 @@ module Werkzeug
 
   def self.thread_pool
     ThreadPool.default
+  end
+
+  def self.create_sequence
+    SequenceFactory
   end
 
   def self.include_tools!
