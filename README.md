@@ -27,6 +27,9 @@ To reduce overhead and to avoid to re-invent often used patterns and helper clas
   <dt>PidFile</dt>
   <dd>Allows to check and run a single instance of your application.</dd>
 
+  <dt>SequenceFactory</dt>
+  <dd>Simple factory to create sequences of given (array) elements.</dd>
+
   <dt>ThreadPool</dt>
   <dd>Small but powerful thread pool implementation.</dd>
 

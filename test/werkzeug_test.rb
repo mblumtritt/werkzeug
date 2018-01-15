@@ -31,4 +31,8 @@ class WerkzeugTest < Test
   def test_thread_pool
     assert_same(Werkzeug::ThreadPool.default, Werkzeug.thread_pool)
   end
+
+  def test_create_sequence
+    assert_same(Werkzeug::SequenceFactory, Werkzeug.create_sequence)
+  end
 end
