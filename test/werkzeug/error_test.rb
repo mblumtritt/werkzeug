@@ -6,7 +6,8 @@ class ErrorTest < Test
       Werkzeug::Error::NoBlockGiven,
       Werkzeug::Error::NoArgument,
       Werkzeug::Error::ArgumentCount,
-      Werkzeug::Error::MethodExpected
+      Werkzeug::Error::MethodExpected,
+      Werkzeug::Error::DoublicateArgumentNames
     ].freeze
 
   def test_types

@@ -10,10 +10,10 @@ class EventsTest < Test
       received_args << args
     end
     events.fire(:not_subscribed, 42)
-    events.fire(:second, 2, 22, 222)
     events.fire(:first, 1, 11)
-    assert_equal([:second, :first], received)
-    assert_equal([[2, 22, 222], [1, 11]], received_args)
+    events.fire(:second, 2, 22, 222)
+    assert_equal(%i[first second], received)
+    assert_equal([[1, 11], [2, 22, 222]], received_args)
   end
 
   def test_register_any
@@ -25,7 +25,7 @@ class EventsTest < Test
     events.fire(:first)
     events.fire(:second)
     events.fire(:thirth)
-    assert_equal([:first, :second, :thirth], received)
+    assert_equal(%i[first second thirth], received)
   end
 
   def test_unregister
@@ -38,7 +38,7 @@ class EventsTest < Test
     events.fire(:first)
     events.fire(:second)
     events.fire(:third)
-    assert_equal([:first, :third], received)
+    assert_equal(%i[first third], received)
   end
 
   def test_reset
@@ -51,6 +51,6 @@ class EventsTest < Test
     events.fire(:first)
     events.fire(:second)
     events.fire(:third)
-    assert_equal([:third], received)
+    assert_equal(%i[third], received)
   end
 end

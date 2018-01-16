@@ -10,6 +10,6 @@ class Test < Minitest::Test
 
   def assert_raises_message(type = nil, message, &block)
     execption = assert_raises(type, &block)
-    assert_equal(message, execption.message)
+    assert_match(message, execption.message)
   end
 end
