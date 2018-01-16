@@ -67,4 +67,4 @@ require 'werkzeug'
 
 ### Some More Help
 
-Please, have a look at the [tests](https://github.com/mblumtritt/werkzeug/blob/master/tes) for better understanding of the tools.
+Please, have a look at the [tests](https://github.com/mblumtritt/werkzeug/blob/master/test) for better understanding of the tools.
