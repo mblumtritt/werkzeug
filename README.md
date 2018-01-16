@@ -13,7 +13,7 @@ To reduce overhead and to avoid to re-invent often used patterns and helper clas
   <dd>Allows you to define hierarchies of exceptions with standard text.</dd>
 
   <dt>DataFile</dt>
-  <dd>Offers access to `__DATA__` sections (like inline templates like in [Sinatra](https://github.com/sinatra/sinatra#inline-templates)).</dd>
+  <dd>Offers access to <code>__DATA__</code> sections (like inline templates like in <a href="https://github.com/sinatra/sinatra#inline-templates" rel="nofollow">Sinatra]</a>).</dd>
 
   <dt>Events</dt>
   <dd>Implements an easy to use event subscription and handling algorithm.</dd>
