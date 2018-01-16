@@ -1,1 +1,1 @@
-gemspec
+source('https://rubygems.org'){ gemspec }
