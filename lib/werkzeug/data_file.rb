@@ -5,7 +5,7 @@ module Werkzeug
     RE_END = /^__END__$\s*/
 
     def self.read(file_name = nil)
-      parse(File.read(file_name || caller_locations[0].path).split(RE_END, 2)[-1])
+      parse(File.read(file_name || caller_locations(1, 1)[0].path).split(RE_END, 2)[-1])
     end
 
     def self.parse(lines)

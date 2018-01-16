@@ -45,9 +45,7 @@ module Werkzeug
     def create_thread
       Thread.new do
         begin
-          while size <= @max_size
-            break unless process_item
-          end
+          break unless process_item while size <= @max_size
         ensure
           remove_thread(Thread.current)
         end
