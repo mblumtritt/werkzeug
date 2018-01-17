@@ -1,7 +1,7 @@
 module Werkzeug
   module SequenceFactory
     def self.loop(*array)
-      array, i = array.flatten, 0
+      i = 0
       proc do
         ret = array[i]
         i += 1
@@ -11,7 +11,7 @@ module Werkzeug
     end
 
     def self.ping_pong(*array)
-      array, i, d = array.flatten, 0, 1
+      i, d = 0, 1
       proc do
         ret = array[i]
         i += d
@@ -21,7 +21,6 @@ module Werkzeug
     end
 
     def self.random(*array)
-      array = array.flatten
       proc{ array.sample }
     end
   end
