@@ -27,6 +27,9 @@ To reduce overhead and to avoid to re-invent often used patterns and helper clas
   <dt>PidFile</dt>
   <dd>Allows to check and run a single instance of your application.</dd>
 
+  <dt>PrefixedCalls</dt>
+  <dd>Module can be included in any class to call all methods with given prefix via `#call_all`.</dd>
+
   <dt>SequenceFactory</dt>
   <dd>Simple factory to create sequences of given elements.</dd>
 

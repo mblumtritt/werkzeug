@@ -10,6 +10,7 @@ module Werkzeug
   autoload :ThreadPool, "#{ROOT}/thread_pool"
   autoload :SequenceFactory, "#{ROOT}/sequence_factory"
   autoload :ToolFunctions, "#{ROOT}/tool_functions"
+  autoload :PrefixedCalls, "#{ROOT}/prefixed_calls"
   autoload :VERSION, "#{ROOT}/version"
 
   def self.configure
