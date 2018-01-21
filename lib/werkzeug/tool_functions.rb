@@ -9,6 +9,13 @@ module Werkzeug
       ret
     end
 
+    def consts(**opts)
+      Error::NoArgument.raise! if opts.empty?
+      ret = Module.new
+      opts.each_pair{ |name, value| ret.const_set(name, value) }
+      ret
+    end
+
     def bits(*args)
       names = _tf_constant_names_of(args)
       ret = Module.new

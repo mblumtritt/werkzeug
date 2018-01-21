@@ -37,7 +37,7 @@ To reduce overhead and to avoid to re-invent often used patterns and helper clas
   <dd>Small but powerful thread pool implementation.</dd>
 
   <dt>ToolFunctions</dt>
-  <dd>A set of tool functions like `Enum` definition.</dd>
+  <dd>A set of tool functions to define enumerable and constants .</dd>
 </dl>
 
 ### Installation

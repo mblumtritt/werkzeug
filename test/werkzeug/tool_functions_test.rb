@@ -25,6 +25,27 @@ class ToolFunctionsTest < Test
     assert_raises(NoMethodError){ enum(1, 2, 3) }
   end
 
+  def test_consts
+    result = consts(Apple: 1, Orange: 4, Pate: 10)
+    assert_kind_of(Module, result)
+
+    assert_equal(%i[Apple Orange Pate], result.constants.sort)
+    assert_same(1, result::Apple)
+    assert_same(4, result::Orange)
+    assert_same(10, result::Pate)
+
+    result = consts(Apple: 1, Orange: 1, Pate: 1)
+    assert_same(1, result::Apple)
+    assert_same(1, result::Orange)
+    assert_same(1, result::Pate)
+  end
+
+  def test_consts_errors
+    assert_raises(Werkzeug::Error::NoArgument){ consts }
+    assert_raises(ArgumentError){ consts(1, 2, 3) }
+    assert_raises(ArgumentError){ consts('Apple' => 1, Orange: 20) }
+  end
+
   def test_bits
     result = bits(:Apple, 'Orange', :Pate)
     assert_kind_of(Module, result)
