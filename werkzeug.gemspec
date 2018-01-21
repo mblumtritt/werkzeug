@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = Werkzeug::VERSION
   spec.summary = 'Collection of every day tools for your Ruby projects.'
   spec.description = <<~EOS
-    To reduce overhead and to avoid to re-invent often used patterns and helper classes this gem offers you a toolset
+    To reduce overhead and to avoid to re-invent often used patterns and helper classes this gem offers a toolset
     of optimized classes and helper methods. All parts are implemented with focus on fast code avoiding any overhead.
   EOS
   spec.author = 'Mike Blumtritt'

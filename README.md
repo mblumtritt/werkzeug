@@ -4,7 +4,7 @@ Collection of every day tools for your Ruby projects.
 
 ## Description
 
-To reduce overhead and to avoid to re-invent often used patterns and helper classes this gem offers you a toolset of optimized classes and helper methods. All parts are implemented with focus on fast code avoiding any overhead.
+To reduce overhead and to avoid to re-invent often used patterns and helper classes this gem offers a toolset of optimized classes and helper methods. All parts are implemented with focus on fast code avoiding any overhead.
 
 ### Features Overview
 
