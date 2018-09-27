@@ -31,6 +31,5 @@ Gem::Specification.new do |spec|
   spec.test_files = all_files.grep(%r{^test/})
   spec.files = all_files - spec.test_files
 
-  spec.has_rdoc = false # sorry...
   spec.extra_rdoc_files = %w[README.md]
 end
