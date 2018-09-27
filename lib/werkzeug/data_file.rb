@@ -1,15 +1,32 @@
 require_relative 'error'
 
 module Werkzeug
-  module DataFile
+  DataFile = Class.new do
     RE_END = /^__END__$\s*/
 
-    def self.read(file_name = nil)
-      parse(File.read(file_name || caller_locations(1, 1)[0].path).split(RE_END, 2)[-1])
+    def initialize
+      @default = nil
     end
 
-    def self.parse(lines)
-      Error::MethodExpected.raise!(:each_line) unless lines.respond_to?(:each_line)
+    def default
+      @default ||= parse(defined?(::DATA) ? ::DATA : '').freeze
+    end
+
+    def names
+      default.keys
+    end
+
+    def [](name)
+      default[name]
+    end
+
+    def read(file_name = nil)
+      file_name ||= caller_locations(1, 1)[0].path
+      parse(File.read(file_name).split(RE_END, 2)[-1])
+    end
+
+    def parse(lines)
+      lines.respond_to?(:each_line) || Error::MethodExpected.raise!(:each_line)
       ret, name, content = {}, :default, []
       lines.each_line do |line|
         next content << line unless line.start_with?('@@ '.freeze)
@@ -19,19 +36,5 @@ module Werkzeug
       ret[name] = content.join
       ret
     end
-
-    def self.default
-      @@default ||= parse(defined?(::DATA) ? ::DATA : '').freeze
-    end
-
-    @@default = nil
-
-    def self.names
-      default.keys
-    end
-
-    def self.[](name)
-      default[name]
-    end
-  end
+  end.new
 end
