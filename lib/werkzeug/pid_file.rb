@@ -38,7 +38,9 @@ module Werkzeug
 
       def create_file(file_name)
         file = File.open(file_name, 'w')
-        Error::FLock.raise!(file_name) unless file.flock(File::LOCK_EX | File::LOCK_NB)
+        unless file.flock(File::LOCK_EX | File::LOCK_NB)
+          Error::FLock.raise!(file_name)
+        end
         file.puts(Process.pid)
         file.flush
         at_exit do

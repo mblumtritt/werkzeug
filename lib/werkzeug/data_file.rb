@@ -2,7 +2,6 @@ require_relative 'error'
 
 module Werkzeug
   DataFile = Class.new do
-    RE_END = /^__END__$\s*/
 
     def initialize
       @default = nil
@@ -36,5 +35,7 @@ module Werkzeug
       ret[name] = content.join
       ret
     end
+
+    RE_END = /^__END__$\s*/
   end.new
 end

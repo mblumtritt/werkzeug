@@ -39,7 +39,9 @@ module Werkzeug
     private
 
     def start_thread
-      @lock.synchronize{ @threads[create_thread] = true if @threads.size < @max_size }
+      @lock.synchronize do
+        @threads[create_thread] = true if @threads.size < @max_size
+      end
     end
 
     def create_thread
