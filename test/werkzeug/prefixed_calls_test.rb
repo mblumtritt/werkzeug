@@ -57,20 +57,6 @@ class PrefixedCallsTest < Test
     assert_equal(expected, @subject.called)
   end
 
-  def test_caching
-    expected = %i[methods _setup _setup_foo setup setup_foo _setup _setup_foo setup setup_foo]
-
-    2.times{ @subject.call_all(:setup) }
-    assert_equal(expected, @subject.called)
-  end
-
-  def test_caching_not_existing
-    expected = %i[methods]
-
-    2.times{ @subject.call_all(:update) }
-    assert_equal(expected, @subject.called)
-  end
-
   def test_forward_arguments
     assert_raises_message(ArgumentError, 'given 3, expected 0') do
       @subject.call_all(:setup, 1, 2, 3)
