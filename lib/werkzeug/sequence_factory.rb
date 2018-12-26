@@ -15,7 +15,7 @@ module Werkzeug
       proc do
         ret = array[i]
         i += d
-        d = -d if i == array.size - 1 || i == 0
+        d = -d if i == array.size - 1 || i.zero?
         ret
       end
     end

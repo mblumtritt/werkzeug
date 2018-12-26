@@ -36,6 +36,6 @@ module Werkzeug
       ret
     end
 
-    RE_END = /^__END__$\s*/
+    RE_END = /^__END__$\s*/.freeze
   end.new
 end
