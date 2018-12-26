@@ -13,6 +13,13 @@ module Werkzeug
   autoload :PrefixedCalls, "#{ROOT}/prefixed_calls"
   autoload :VERSION, "#{ROOT}/version"
 
+  def self.load!
+    constants.each do |const|
+      fn = autoload?(const)
+      require(fn) if fn
+    end
+  end
+
   def self.configure
     block_given? ? yield(Config) : Config
   end
