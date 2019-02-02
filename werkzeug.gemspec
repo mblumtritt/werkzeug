@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
     of optimized classes and helper methods. All parts are implemented with focus on fast code avoiding any overhead.
   DESCRIPTION
   spec.author = 'Mike Blumtritt'
-  spec.email = 'mike.blumtritt@invision.de'
+  spec.email = 'mike.blumtritt@pm.me'
   spec.homepage = 'https://github.com/mblumtritt/werkzeug'
   spec.metadata = {'issue_tracker' => 'https://github.com/mblumtritt/werkzeug/issues'}
   spec.rubyforge_project = spec.name
