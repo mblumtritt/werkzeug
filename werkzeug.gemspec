@@ -13,7 +13,10 @@ Gem::Specification.new do |spec|
   spec.author = 'Mike Blumtritt'
   spec.email = 'mike.blumtritt@pm.me'
   spec.homepage = 'https://github.com/mblumtritt/werkzeug'
-  spec.metadata = {'issue_tracker' => 'https://github.com/mblumtritt/werkzeug/issues'}
+  spec.metadata = {
+    'source_code_uri' => 'https://github.com/mblumtritt/werkzeug',
+    'bug_tracker_uri' => 'https://github.com/mblumtritt/werkzeug/issues'
+  }
   spec.rubyforge_project = spec.name
 
   spec.add_development_dependency 'bundler'
