@@ -4,19 +4,19 @@ Collection of every day tools for your Ruby projects.
 
 ## Description
 
-To reduce overhead and to avoid to re-invent often used patterns and helper classes this gem offers a toolset of optimized classes and helper methods. All parts are implemented with focus on fast code avoiding any overhead.
+A toolset of optimized classes and helper methods. It implements often used patterns and helpers. All parts are implemented with focus on fast code avoiding any overhead.
 
 ### Features Overview
 
 <dl>
   <dt>CustomExceptions</dt>
-  <dd>Allows you to define hierarchies of exceptions with standard text.</dd>
+  <dd>Define hierarchies of exceptions with standard text.</dd>
 
   <dt>DataFile</dt>
   <dd>Offers access to <code>__DATA__</code> sections (like inline templates like in <a href="https://github.com/sinatra/sinatra#inline-templates" rel="nofollow">Sinatra</a>).</dd>
 
   <dt>Events</dt>
-  <dd>Implements an easy to use event subscription and handling algorithm.</dd>
+  <dd>Implements an easy to use structured/hierarchical event subscription and handling algorithm.</dd>
 
   <dt>Future</dt>
   <dd>Powerful asynchronous code execution with a very small footprint. Uses `ThreadPool` (see below).</dd>
@@ -25,7 +25,7 @@ To reduce overhead and to avoid to re-invent often used patterns and helper clas
   <dd>Information about the underlying OS of your project.</dd>
 
   <dt>PidFile</dt>
-  <dd>Allows to check and run a single instance of your application.</dd>
+  <dd>Ensure to run a single instance of your application.</dd>
 
   <dt>PrefixedCalls</dt>
   <dd>Module can be included in any class to call all methods with given prefix via `#call_all`.</dd>
@@ -34,10 +34,10 @@ To reduce overhead and to avoid to re-invent often used patterns and helper clas
   <dd>Simple factory to create sequences of given elements.</dd>
 
   <dt>ThreadPool</dt>
-  <dd>Small but powerful thread pool implementation.</dd>
+  <dd>Small but very powerful thread pool implementation.</dd>
 
   <dt>ToolFunctions</dt>
-  <dd>A set of tool functions to define enumerable and constants .</dd>
+  <dd>A set of tool functions to define enumerables and constants .</dd>
 </dl>
 
 ### Installation
