@@ -1,4 +1,5 @@
 require_relative 'config'
+require_relative 'error'
 
 module Werkzeug
   class ThreadPool
@@ -23,9 +24,7 @@ module Werkzeug
     end
 
     def run(&block)
-      return false unless block
-      add(block)
-      nil
+      block ? add(block) : Error::NoBlockGiven.raise!
     end
 
     def join
@@ -40,7 +39,7 @@ module Werkzeug
 
     def start_thread
       @lock.synchronize do
-        @threads[create_thread] = true if @threads.size < @max_size
+        @threads[create_thread.__id__] = true if @threads.size < @max_size
       end
     end
 
@@ -53,8 +52,9 @@ module Werkzeug
     end
 
     def remove_thread(thread)
+      id = thread.__id__
       @lock.synchronize do
-        @threads.delete(thread)
+        @threads.delete(id)
         @condition.broadcast if @threads.empty?
       end
     end
