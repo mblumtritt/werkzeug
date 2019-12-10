@@ -58,6 +58,6 @@ module Werkzeug
     end
 
     NOT_SET = BasicObject.new
-    private_constant :NOT_SET
+    private_constant(:NOT_SET)
   end
 end
