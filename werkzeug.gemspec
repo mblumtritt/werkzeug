@@ -7,8 +7,9 @@ Gem::Specification.new do |spec|
   spec.version = Werkzeug::VERSION
   spec.summary = 'Collection of every day tools for your Ruby projects.'
   spec.description = <<~DESCRIPTION
-    To reduce overhead and to avoid to re-invent often used patterns and helper classes this gem offers a toolset
-    of optimized classes and helper methods. All parts are implemented with focus on fast code avoiding any overhead.
+    A toolset of optimized classes and helper methods.
+    It implements often used patterns and helpers.
+    All parts are implemented with focus on fast code avoiding any overhead.
   DESCRIPTION
   spec.author = 'Mike Blumtritt'
   spec.email = 'mike.blumtritt@pm.me'
