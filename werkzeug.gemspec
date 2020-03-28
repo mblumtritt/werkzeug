@@ -18,7 +18,6 @@ Gem::Specification.new do |spec|
     'source_code_uri' => 'https://github.com/mblumtritt/werkzeug',
     'bug_tracker_uri' => 'https://github.com/mblumtritt/werkzeug/issues'
   }
-  spec.rubyforge_project = spec.name
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'minitest'
