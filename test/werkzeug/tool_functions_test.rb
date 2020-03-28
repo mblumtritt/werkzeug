@@ -43,7 +43,7 @@ class ToolFunctionsTest < Test
   def test_consts_errors
     assert_raises(Werkzeug::Error::NoArgument){ consts }
     assert_raises(ArgumentError){ consts(1, 2, 3) }
-    assert_raises(ArgumentError){ consts('Apple' => 1, Orange: 20) }
+    assert_raises(NameError){ consts(apple: 1) }
   end
 
   def test_bits
