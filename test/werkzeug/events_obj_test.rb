@@ -10,7 +10,7 @@ class EventsObjTest < Test
     end
 
     %i[zero one two three four five].each do |name|
-      define_method(name){ |_, _| @fired << name }
+      define_method(name) { |_, _| @fired << name }
     end
   end
 
@@ -19,11 +19,7 @@ class EventsObjTest < Test
     @events = Werkzeug::Events.new
     @events.register(
       @consumer,
-      zero: '*',
-      one: 'a.b.c',
-      two: '*.b.c',
-      three: 'a.b.*',
-      four: 'a.*.c',
+      zero: '*', one: 'a.b.c', two: '*.b.c', three: 'a.b.*', four: 'a.*.c'
     )
   end
 
@@ -34,12 +30,12 @@ class EventsObjTest < Test
   end
 
   def test_fire
-    assert_fired('a.b.c',  :one, :two, :three, :four)
-    assert_fired('x.b.c',  :two)
-    assert_fired('a.b.x',  :three)
-    assert_fired('a.x.c',  :four)
+    assert_fired('a.b.c', :one, :two, :three, :four)
+    assert_fired('x.b.c', :two)
+    assert_fired('a.b.x', :three)
+    assert_fired('a.x.c', :four)
     assert_fired('a.2x.c', :four)
-    assert_fired('abc',    :zero)
+    assert_fired('abc', :zero)
   end
 
   def test_register_result
@@ -49,8 +45,8 @@ class EventsObjTest < Test
   end
 
   def test_errors
-    assert_raises(Werkzeug::Error::NoArgument){ @events.register(nil) }
-    assert_raises(Werkzeug::Error::NoArgument){ @events.register(Object.new) }
+    assert_raises(Werkzeug::Error::NoArgument) { @events.register(nil) }
+    assert_raises(Werkzeug::Error::NoArgument) { @events.register(Object.new) }
     assert_raises_message(Werkzeug::Error::InvalidMethod, 'to_s') do
       @events.register(Object.new, to_s: 'a')
     end

@@ -11,7 +11,7 @@ module Werkzeug
     end
 
     def wait
-      @lock.synchronize{ chore } unless avail?
+      @lock.synchronize { chore } unless avail?
       self
     end
 

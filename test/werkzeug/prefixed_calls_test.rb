@@ -63,4 +63,3 @@ class PrefixedCallsTest < Test
     end
   end
 end
-

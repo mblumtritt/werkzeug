@@ -1,9 +1,9 @@
 require 'minitest/autorun'
 require 'minitest/parallel'
 require 'minitest/proveit'
-
 require_relative '../lib/werkzeug'
-Werkzeug.load! # avoid load conflicts in threads
+
+Werkzeug.load!
 
 class Test < Minitest::Test
   parallelize_me!

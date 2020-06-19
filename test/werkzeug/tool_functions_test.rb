@@ -19,10 +19,12 @@ class ToolFunctionsTest < Test
   end
 
   def test_enum_errors
-    assert_raises(Werkzeug::Error::NoArgument){ enum }
-    assert_raises(Werkzeug::Error::NoArgument){ enum(start: 666) }
-    assert_raises(Werkzeug::Error::DoublicateArgumentNames){ enum(:Apple, :Orange, :Plum, :Apple) }
-    assert_raises(NoMethodError){ enum(1, 2, 3) }
+    assert_raises(Werkzeug::Error::NoArgument) { enum }
+    assert_raises(Werkzeug::Error::NoArgument) { enum(start: 666) }
+    assert_raises(Werkzeug::Error::DoublicateArgumentNames) do
+      enum(:Apple, :Orange, :Plum, :Apple)
+    end
+    assert_raises(NoMethodError) { enum(1, 2, 3) }
   end
 
   def test_consts
@@ -41,9 +43,9 @@ class ToolFunctionsTest < Test
   end
 
   def test_consts_errors
-    assert_raises(Werkzeug::Error::NoArgument){ consts }
-    assert_raises(ArgumentError){ consts(1, 2, 3) }
-    assert_raises(NameError){ consts(apple: 1) }
+    assert_raises(Werkzeug::Error::NoArgument) { consts }
+    assert_raises(ArgumentError) { consts(1, 2, 3) }
+    assert_raises(NameError) { consts(apple: 1) }
   end
 
   def test_bits
@@ -56,8 +58,10 @@ class ToolFunctionsTest < Test
   end
 
   def test_bits_errors
-    assert_raises(Werkzeug::Error::NoArgument){ bits }
-    assert_raises(Werkzeug::Error::DoublicateArgumentNames){ bits(:Apple, :Orange, :Plum, :Apple) }
-    assert_raises(NoMethodError){ bits(1, 2, 3) }
+    assert_raises(Werkzeug::Error::NoArgument) { bits }
+    assert_raises(Werkzeug::Error::DoublicateArgumentNames) do
+      bits(:Apple, :Orange, :Plum, :Apple)
+    end
+    assert_raises(NoMethodError) { bits(1, 2, 3) }
   end
 end

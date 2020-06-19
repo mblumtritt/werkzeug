@@ -12,7 +12,7 @@ class EventTest < Test
   end
 
   def test_reset
-    @events.on('a', 'b'){}
+    @events.on('a', 'b') {}
     refute_empty(@events)
     assert_same(2, @events.size)
 
@@ -20,9 +20,9 @@ class EventTest < Test
     assert_empty(@events)
     assert_same(0, @events.size)
   end
-  
+
   def test_errors
-    assert_raises(ArgumentError){ @events.call }
-    assert_raises(Werkzeug::Error::InvalidEventName){ @events.call('') }
+    assert_raises(ArgumentError) { @events.call }
+    assert_raises(Werkzeug::Error::InvalidEventName) { @events.call('') }
   end
 end

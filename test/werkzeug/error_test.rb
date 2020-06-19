@@ -3,14 +3,14 @@ require_relative '../../lib/werkzeug/error'
 
 class ErrorTest < Test
   ERROR_CLASSES = [
-      Werkzeug::Error::NoBlockGiven,
-      Werkzeug::Error::NoArgument,
-      Werkzeug::Error::ArgumentCount,
-      Werkzeug::Error::InvalidMethod,
-      Werkzeug::Error::MethodExpected,
-      Werkzeug::Error::DoublicateArgumentNames,
-      Werkzeug::Error::InvalidEventName
-    ].freeze
+    Werkzeug::Error::NoBlockGiven,
+    Werkzeug::Error::NoArgument,
+    Werkzeug::Error::ArgumentCount,
+    Werkzeug::Error::InvalidMethod,
+    Werkzeug::Error::MethodExpected,
+    Werkzeug::Error::DoublicateArgumentNames,
+    Werkzeug::Error::InvalidEventName
+  ].freeze
 
   def test_types
     ([Werkzeug::Error] + ERROR_CLASSES).each do |error|
@@ -27,7 +27,7 @@ class ErrorTest < Test
 
   def test_method
     ERROR_CLASSES.each do |error|
-      assert_equal('method', defined?(error::raise!))
+      assert_equal('method', defined?(error.raise!))
     end
   end
 end

@@ -4,9 +4,7 @@ require_relative 'error'
 module Werkzeug
   class ThreadPool
     def self.default
-      @pool ||= new.tap do |pool|
-        at_exit{ pool.join }
-      end
+      @pool ||= new.tap { |pool| at_exit { pool.join } }
     end
 
     attr_reader :max_size
@@ -28,11 +26,11 @@ module Werkzeug
     end
 
     def join
-      @lock.synchronize{ @condition.wait unless @threads.empty? }
+      @lock.synchronize { @condition.wait unless @threads.empty? }
     end
 
     def size
-      @lock.synchronize{ @threads.size }
+      @lock.synchronize { @threads.size }
     end
 
     private

@@ -3,9 +3,7 @@ require_relative './test_helper'
 class WerkzeugTest < Test
   def test_configure
     assert_same(Werkzeug::Config, Werkzeug.configure)
-    Werkzeug.configure do |arg|
-      assert_same(Werkzeug::Config, arg)
-    end
+    Werkzeug.configure { |arg| assert_same(Werkzeug::Config, arg) }
   end
 
   def test_data_file
@@ -17,7 +15,7 @@ class WerkzeugTest < Test
   end
 
   def test_future
-    assert_same(Werkzeug::Future, Werkzeug.future{}.class)
+    assert_same(Werkzeug::Future, Werkzeug.future {}.class)
   end
 
   def test_host_os

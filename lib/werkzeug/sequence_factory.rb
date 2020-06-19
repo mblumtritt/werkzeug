@@ -21,7 +21,7 @@ module Werkzeug
     end
 
     def self.random(*array)
-      proc{ array.sample }
+      proc { array.sample }
     end
   end
 end

@@ -30,11 +30,11 @@ class SequenceFactoryTest < Test
   def test_random
     elements = [1, 2, 3, 4].freeze
     subject = Werkzeug::SequenceFactory.random(*elements)
-    10.times{ assert_includes(elements, subject.call) }
+    10.times { assert_includes(elements, subject.call) }
 
     elements = [1, [2, 3], 4].freeze
     subject = Werkzeug::SequenceFactory.random(*elements)
-    10.times{ assert_includes(elements, subject.call) }
+    10.times { assert_includes(elements, subject.call) }
 
     subject = Werkzeug::SequenceFactory.random
     assert(Array.new(10, &subject).all?(&:nil?))

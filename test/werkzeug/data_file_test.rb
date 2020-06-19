@@ -8,11 +8,12 @@ class DataFileTest < Test
       Line 3
       Line 4
     EOS
-    assert_equal({default: sample}, Werkzeug::DataFile.parse(sample))
+    assert_equal({ default: sample }, Werkzeug::DataFile.parse(sample))
   end
 
   def test_parse_files
-    result = Werkzeug::DataFile.parse <<~EOS
+    result =
+      Werkzeug::DataFile.parse <<~EOS
       default_line_1
       default_line_2
       default_line_3
@@ -26,9 +27,18 @@ class DataFileTest < Test
       file_3_line_3
     EOS
     assert_equal(%i[default file_2 file_3], result.keys)
-    assert_equal("default_line_1\ndefault_line_2\ndefault_line_3\n", result[:default])
-    assert_equal("file_2_line_1\nfile_2_line_2\nfile_2_line_3\n", result[:file_2])
-    assert_equal("file_3_line_1\nfile_3_line_2\nfile_3_line_3\n", result[:file_3])
+    assert_equal(
+      "default_line_1\ndefault_line_2\ndefault_line_3\n",
+      result[:default]
+    )
+    assert_equal(
+      "file_2_line_1\nfile_2_line_2\nfile_2_line_3\n",
+      result[:file_2]
+    )
+    assert_equal(
+      "file_3_line_1\nfile_3_line_2\nfile_3_line_3\n",
+      result[:file_3]
+    )
   end
 
   def test_read

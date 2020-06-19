@@ -32,10 +32,10 @@ module Werkzeug
 
     def on(*events, &consumer)
       Error::NoArgument.raise! if events.empty?
-      events = events.map{ |event| split(event) }
+      events = events.map { |event| split(event) }
       Error::NoBlockGiven.raise! unless consumer
       id = consumer.__id__
-      events.each{ |parts| @root.insert(parts, id, consumer) }
+      events.each { |parts| @root.insert(parts, id, consumer) }
       id
     end
 
@@ -89,7 +89,7 @@ module Werkzeug
 
     class Node
       def initialize
-        @nodes = Hash.new{ |h, k| h[k] = Node.new }
+        @nodes = Hash.new { |h, k| h[k] = Node.new }
         @consumers = {}
         @consumers.compare_by_identity
       end
@@ -100,7 +100,7 @@ module Werkzeug
 
       def size
         sum = @consumers.size
-        @nodes.each_value{ |node| sum += node.size }
+        @nodes.each_value { |node| sum += node.size }
         sum
       end
 
@@ -114,8 +114,8 @@ module Werkzeug
       end
 
       def remove(ids)
-        ids.each{ |id| @consumers.delete(id) }
-        @nodes.each_value{ |n| n.remove(ids) }
+        ids.each { |id| @consumers.delete(id) }
+        @nodes.each_value { |n| n.remove(ids) }
       end
 
       def remove_all(parts)
@@ -125,7 +125,7 @@ module Werkzeug
 
       def fire(parts, event, opts)
         if parts.empty?
-          @consumers.values.each{ |c| c.call(event, opts) }
+          @consumers.values.each { |c| c.call(event, opts) }
         else
           part = parts.shift
           @nodes['*'].fire(Array.new(parts), event, opts) if @nodes.key?('*')

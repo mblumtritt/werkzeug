@@ -8,16 +8,14 @@ module Werkzeug
   autoload :HostOS, "#{ROOT}/host_os"
   autoload :PidFile, "#{ROOT}/pid_file"
   autoload :ThreadPool, "#{ROOT}/thread_pool"
+  autoload :Set, "#{ROOT}/set"
   autoload :SequenceFactory, "#{ROOT}/sequence_factory"
   autoload :ToolFunctions, "#{ROOT}/tool_functions"
   autoload :PrefixedCalls, "#{ROOT}/prefixed_calls"
   autoload :VERSION, "#{ROOT}/version"
 
   def self.load!
-    constants.each do |const|
-      fn = autoload?(const)
-      require(fn) if fn
-    end
+    constants.each { |const| fn = autoload?(const) and require(fn) }
   end
 
   def self.configure
@@ -53,7 +51,7 @@ module Werkzeug
   end
 
   def self.include_tools!
-    TOP.instance_exec{ include ToolFunctions }
+    TOP.instance_exec { include ToolFunctions }
   end
 end
 
