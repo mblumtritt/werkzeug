@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Werkzeug
   module CustomExceptions
     def def_exception(name, parent = nil, format)

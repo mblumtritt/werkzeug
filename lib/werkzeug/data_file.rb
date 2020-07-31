@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'error'
 
 module Werkzeug
@@ -29,7 +31,7 @@ module Werkzeug
           Error::MethodExpected.raise!(:each_line)
         ret, name, content = {}, :default, []
         lines.each_line do |line|
-          next content << line unless line.start_with?('@@ '.freeze)
+          next content << line unless line.start_with?('@@ ')
           ret[name] = content.join
           name, content = line.chomp[3..-1].to_sym, []
         end
