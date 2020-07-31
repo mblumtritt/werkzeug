@@ -10,7 +10,7 @@ class EventsObjTest < Test
     end
 
     %i[zero one two three four five].each do |name|
-      define_method(name) { |_, _| @fired << name }
+      define_method(name) { |_opts| @fired << name }
     end
   end
 

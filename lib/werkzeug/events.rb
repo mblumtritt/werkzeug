@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'error'
+require_relative 'delegate'
 
 module Werkzeug
   class Events
+    extend Delegate
+
+    delegate :empty?, :size, to: :@root
+
     def self.default
       @default ||= new
     end
@@ -12,21 +17,13 @@ module Werkzeug
       reset!
     end
 
-    def empty?
-      @root.empty?
-    end
-
-    def size
-      @root.size
-    end
-
     def reset!
       @root = Node.new
     end
     alias clear! reset!
 
-    def call(event, **opts)
-      @root.fire(split(event), event.to_s, opts.freeze)
+    def call(event, opts = {})
+      @root.fire(split(event), opts.merge(event: event.to_s).freeze)
     end
     alias fire call
 
@@ -71,7 +68,7 @@ module Werkzeug
 
     def as_method(object, name)
       method = object.method(name)
-      unless method.arity == 2 || method.arity < 0
+      unless method.arity == 1 || method.arity < 0
         Error::InvalidMethod.raise!(name)
       end
       method
@@ -90,8 +87,7 @@ module Werkzeug
     class Node
       def initialize
         @nodes = Hash.new { |h, k| h[k] = Node.new }
-        @consumers = {}
-        @consumers.compare_by_identity
+        @consumers = {}.compare_by_identity
       end
 
       def empty?
@@ -123,13 +119,13 @@ module Werkzeug
         parts.empty? ? @nodes.delete(part) : @nodes[part].remove_all(parts)
       end
 
-      def fire(parts, event, opts)
+      def fire(parts, opts)
         if parts.empty?
-          @consumers.values.each { |c| c.call(event, opts) }
+          @consumers.values.each { |c| c.call(**opts) }
         else
           part = parts.shift
-          @nodes['*'].fire(Array.new(parts), event, opts) if @nodes.key?('*')
-          @nodes[part].fire(parts, event, opts) if @nodes.key?(part)
+          @nodes['*'].fire(Array.new(parts), opts) if @nodes.key?('*')
+          @nodes[part].fire(parts, opts) if @nodes.key?(part)
         end
       end
     end

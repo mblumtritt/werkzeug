@@ -6,23 +6,25 @@ class EventTest < Test
     @events = Werkzeug::Events.new
   end
 
+  attr_reader :events
+
   def test_defaults
-    assert_empty(@events)
-    assert_same(0, @events.size)
+    assert_empty(events)
+    assert_same(0, events.size)
   end
 
   def test_reset
-    @events.on('a', 'b') {}
-    refute_empty(@events)
-    assert_same(2, @events.size)
+    events.on('a', 'b') {}
+    refute_empty(events)
+    assert_same(2, events.size)
 
-    @events.reset!
-    assert_empty(@events)
-    assert_same(0, @events.size)
+    events.reset!
+    assert_empty(events)
+    assert_same(0, events.size)
   end
 
   def test_errors
-    assert_raises(ArgumentError) { @events.call }
-    assert_raises(Werkzeug::Error::InvalidEventName) { @events.call('') }
+    assert_raises(ArgumentError) { events.call }
+    assert_raises(Werkzeug::Error::InvalidEventName) { events.call('') }
   end
 end
