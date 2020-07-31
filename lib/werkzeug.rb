@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 module Werkzeug
-  ROOT = __FILE__[0..-4].freeze
+  ROOT = __FILE__[0..-4]
   autoload :Config, "#{ROOT}/config"
   autoload :CustomExceptions, "#{ROOT}/custom_exceptions"
   autoload :DataFile, "#{ROOT}/data_file"
+  autoload :Delegate, "#{ROOT}/delegate"
   autoload :Events, "#{ROOT}/events"
   autoload :Future, "#{ROOT}/future"
   autoload :HostOS, "#{ROOT}/host_os"

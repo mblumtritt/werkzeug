@@ -9,6 +9,8 @@ module Werkzeug
     NoArgument = create_exception('too few arguments')
     ArgumentCount =
       create_exception('wrong number of arguments (given %s, expected %s)')
+    InvalidArgumentType =
+      create_exception('invalid argument type for "%s"  - %s')
     InvalidMethod = create_exception('no such method - #%s')
     MethodExpected = create_exception('missing method for argument - #%s')
     DoublicateArgumentNames =

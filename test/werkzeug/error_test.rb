@@ -6,6 +6,7 @@ class ErrorTest < Test
     Werkzeug::Error::NoBlockGiven,
     Werkzeug::Error::NoArgument,
     Werkzeug::Error::ArgumentCount,
+    Werkzeug::Error::InvalidArgumentType,
     Werkzeug::Error::InvalidMethod,
     Werkzeug::Error::MethodExpected,
     Werkzeug::Error::DoublicateArgumentNames,

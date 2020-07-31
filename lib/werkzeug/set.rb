@@ -1,7 +1,12 @@
 require_relative 'error'
+require_relative 'delegate'
 
 module Werkzeug
   class Set
+    extend Delegate
+
+    delegate :size, :empty?, to: :@items
+
     def self.[](*args, compare_by_identity: false, &key_gen_proc)
       new(
         args.empty? ? nil : args,
@@ -39,16 +44,8 @@ module Werkzeug
       super
     end
 
-    def size
-      @items.size
-    end
-
     def count(&block)
       block ? super : @items.size
-    end
-
-    def empty?
-      @items.empty?
     end
 
     def clear
@@ -142,9 +139,7 @@ module Werkzeug
       !intersect?(set)
     end
 
-    def union(enum)
-      dup.merge(enum)
-    end
+    alias union merge
     alias + union
     alias | union
 
