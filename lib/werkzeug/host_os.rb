@@ -8,7 +8,7 @@ module Werkzeug
       end
 
       def type
-        @type ||= MAP.keys.find{ |type| check_type(type) }
+        @type ||= MAP.keys.find { |type| check_type(type) }
       end
 
       def linux?
@@ -61,13 +61,9 @@ module Werkzeug
       end
 
       def find_temp_dir
-        test_dir(ENV['TMPDIR']) ||
-        test_dir(ENV['TMP']) ||
-        test_dir(ENV['TEMP']) ||
-        sys_temp? ||
-        test_dir('./tmp') ||
-        test_dir('.') ||
-        test_dir('.,')
+        test_dir(ENV['TMPDIR']) || test_dir(ENV['TMP']) ||
+          test_dir(ENV['TEMP']) || sys_temp? || test_dir('./tmp') ||
+          test_dir('.') || test_dir('.,')
       end
 
       def sys_temp?

@@ -21,13 +21,12 @@ module Werkzeug
         default[name]
       end
 
-      def read(file_name = nil)
-        file_name ||= caller_locations(1, 1)[0].path
+      def read(file_name = caller_locations(1, 1).first.path)
         parse(File.read(file_name).split(RE_END, 2)[-1])
       end
 
       def parse(lines)
-        lines.respond_to?(:each_line) ||
+        lines.respond_to?(:each_line) or
           Error::MethodExpected.raise!(:each_line)
         ret, name, content = {}, :default, []
         lines.each_line do |line|
