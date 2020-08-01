@@ -33,4 +33,6 @@ module Werkzeug
       Error::DoublicateArgumentNames.raise!(args.inspect)
     end
   end
+
+  extend ToolFunctions
 end
