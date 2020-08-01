@@ -1,40 +1,34 @@
 # frozen_string_literal: true
 
 module Werkzeug
-  HostOS =
-    Class.new do
-      def initialize
-        @type = @temp_dir = nil
-      end
-
+  module HostOS
+    class << self
       def name
-        RbConfig::CONFIG['host_os']
-      end
-
-      def linux?
-        /linux/.match?(name)
-      end
-
-      def mac_os?
-        /darwin|mac os/.match?(name)
-      end
-
-      def windows?
-        /msdos|mswin|djgpp|msys|mingw|cygwin|bccwin|wince|emc|windows/i.match?(
-          name
-        )
-      end
-
-      def unix?
-        /(aix|(net|free|open)bsd|solaris|irix|hpux)/i.match?(name)
-      end
-
-      def unix_like?
-        unix? || linux? || mac_os? || /cygwin/.match?(name)
+        @name ||= RbConfig::CONFIG['host_os'].downcase
       end
 
       def type
-        @type ||= find_type
+        @type ||= MAP.keys.find{ |type| check_type(type) }
+      end
+
+      def linux?
+        type == :linux
+      end
+
+      def mac_os?
+        type == :mac_os
+      end
+
+      def windows?
+        type == :windows
+      end
+
+      def unix?
+        type == :unix
+      end
+
+      def unix_like?
+        unix? || linux? || mac_os? || check_type(:cygwin)
       end
 
       def temp_dir
@@ -43,22 +37,46 @@ module Werkzeug
 
       private
 
-      def find_type
-        return :linux if linux?
-        return :mac_os if mac_os?
-        return :unix if unix?
-        return :windows if windows?
-        nil
+      MAP = {
+        linux: %w[linux],
+        mac_os: ['darwin', 'mac os'],
+        unix: %w[netbsd freebsd openbsd aix solaris irix hpux],
+        windows: %w[
+          msdos
+          mswin
+          djgpp
+          msys
+          mingw
+          cygwin
+          bccwin
+          wince
+          emc
+          windows
+        ],
+        cygwin: %w[cygwin] # must be last in the map!
+      }
+
+      def check_type(type, name = self.name)
+        MAP[type].any? { |mark| name.index(mark) }
       end
 
       def find_temp_dir
-        test_dir(ENV['TMPDIR']) || test_dir(ENV['TMP']) ||
-          test_dir(ENV['TEMP']) || test_dir('./tmp') ||
-          test_dir(defined?(Etc.systmpdir) ? Etc.systmpdir : '/tmp')
+        test_dir(ENV['TMPDIR']) ||
+        test_dir(ENV['TMP']) ||
+        test_dir(ENV['TEMP']) ||
+        sys_temp? ||
+        test_dir('./tmp') ||
+        test_dir('.') ||
+        test_dir('.,')
+      end
+
+      def sys_temp?
+        require 'etc' unless defined?(Etc)
+        test_dir(Etc.systmpdir)
       end
 
       def test_dir(dir)
-        return nil unless dir
+        return unless dir
         dir = File.expand_path(dir)
         valid_dir?(dir) ? dir : nil
       end
@@ -71,5 +89,6 @@ module Werkzeug
       rescue StandardError
         false
       end
-    end.new
+    end
+  end
 end
