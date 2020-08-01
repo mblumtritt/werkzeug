@@ -39,9 +39,8 @@ module Werkzeug
     end
 
     def respond_to?(name, _ = false)
-      BASE_METHODS.index(name) || attr?(name) || (
-        name.end_with?('=', '?') && attr?(name.to_s.chop.to_sym)
-      )
+      BASE_METHODS.index(name) || attr?(name) ||
+        (name.end_with?('=', '?') && attr?(name.to_s.chop.to_sym))
     end
 
     def method_missing(name, *args, &block)

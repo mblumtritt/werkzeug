@@ -46,6 +46,6 @@ class ContextTest < Test
     refute(context.val?)
     refute(context.attr?(:val))
 
-    assert_raises(NoMethodError){ context.no_val }
+    assert_raises(NoMethodError) { context.no_val }
   end
 end

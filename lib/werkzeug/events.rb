@@ -7,11 +7,11 @@ module Werkzeug
   class Events
     extend Delegate
 
-    delegate :empty?, :size, to: :@root
-
     def self.default
       @default ||= new
     end
+
+    delegate :empty?, :size, to: :@root
 
     def initialize
       reset!
