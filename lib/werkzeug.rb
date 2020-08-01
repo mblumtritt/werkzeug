@@ -3,11 +3,13 @@
 module Werkzeug
   ROOT = __FILE__[0..-4]
   autoload :Config, "#{ROOT}/config"
+  autoload :Context, "#{ROOT}/context"
   autoload :CustomExceptions, "#{ROOT}/custom_exceptions"
   autoload :DataFile, "#{ROOT}/data_file"
   autoload :Delegate, "#{ROOT}/delegate"
   autoload :Events, "#{ROOT}/events"
   autoload :Future, "#{ROOT}/future"
+  autoload :HashInspction, "#{ROOT}/hash_inspection"
   autoload :HostOS, "#{ROOT}/host_os"
   autoload :PidFile, "#{ROOT}/pid_file"
   autoload :ThreadPool, "#{ROOT}/thread_pool"
@@ -23,6 +25,14 @@ module Werkzeug
 
   def self.configure
     block_given? ? yield(Config) : Config
+  end
+
+  def self.include_tools!
+    TOP.instance_exec { include ToolFunctions }
+  end
+
+  def self.context
+    Context.default
   end
 
   def self.data_file
@@ -51,10 +61,6 @@ module Werkzeug
 
   def self.create_sequence
     SequenceFactory
-  end
-
-  def self.include_tools!
-    TOP.instance_exec { include ToolFunctions }
   end
 end
 
