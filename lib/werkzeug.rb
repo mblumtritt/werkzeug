@@ -14,6 +14,7 @@ module Werkzeug
   autoload :PidFile, "#{ROOT}/pid_file"
   autoload :ThreadPool, "#{ROOT}/thread_pool"
   autoload :Set, "#{ROOT}/set"
+  autoload :Static, "#{ROOT}/static"
   autoload :SequenceFactory, "#{ROOT}/sequence_factory"
   autoload :ToolFunctions, "#{ROOT}/tool_functions"
   autoload :PrefixedCalls, "#{ROOT}/prefixed_calls"
@@ -43,8 +44,8 @@ module Werkzeug
     Events.default
   end
 
-  def self.future(*args, &block)
-    Future.new(*args, &block)
+  def self.future(...)
+    Future.new(...)
   end
 
   def self.host_os
@@ -57,6 +58,10 @@ module Werkzeug
 
   def self.thread_pool
     ThreadPool.default
+  end
+
+  def self.create_static(...)
+    Static.new(...)
   end
 
   def self.create_sequence

@@ -15,7 +15,7 @@ class WerkzeugTest < Test
   end
 
   def test_future
-    assert_same(Werkzeug::Future, Werkzeug.future {}.class)
+    assert_same(Werkzeug::Future, (Werkzeug.future {}).class)
   end
 
   def test_host_os

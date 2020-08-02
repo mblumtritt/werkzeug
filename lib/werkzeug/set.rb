@@ -3,10 +3,6 @@ require_relative 'delegate'
 
 module Werkzeug
   class Set
-    extend Delegate
-
-    delegate :size, :empty?, to: :@items
-
     def self.[](*args, compare_by_identity: false, &key_gen_proc)
       new(
         args.empty? ? nil : args,
@@ -16,6 +12,9 @@ module Werkzeug
     end
 
     include Enumerable
+    extend Delegate
+
+    delegate :size, :empty?, to: :@items
 
     def initialize(enum = nil, compare_by_identity: false, &key_gen_proc)
       @items = {}
