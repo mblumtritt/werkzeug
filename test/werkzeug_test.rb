@@ -30,6 +30,11 @@ class WerkzeugTest < Test
     assert_same(Werkzeug::ThreadPool.default, Werkzeug.thread_pool)
   end
 
+  def test_create_static
+    value = { att: BasicObject.new }
+    assert_same(value[:att], Werkzeug.create_static(:att).new(value).att)
+  end
+
   def test_create_sequence
     assert_same(Werkzeug::SequenceFactory, Werkzeug.create_sequence)
   end
