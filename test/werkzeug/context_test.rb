@@ -29,14 +29,14 @@ class ContextTest < Test
     )
 
     i = 0
-    context.define('block') { i += 1 }
-    assert_same(1, context.block)
-    assert_same(2, context.block)
+    context.define('counter') { i += 1 }
+    assert_same(1, context.counter)
+    assert_same(2, context.counter)
 
     context.define(:sum) { |a, b| a + b }
     assert_same(11, context.sum(4, 7))
 
-    assert_equal(%i[int val block sum], context.attr)
+    assert_equal(%i[int val counter sum], context.attr)
     assert(context.attr?(:int))
 
     refute(context.val?)

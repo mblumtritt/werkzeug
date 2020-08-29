@@ -29,7 +29,7 @@ module Werkzeug
 
     def on(*events, &consumer)
       Error::NoArgument.raise! if events.empty?
-      events = events.map { |event| split(event) }
+      events = events.map! { |event| split(event) }
       Error::NoBlockGiven.raise! unless consumer
       id = consumer.__id__
       events.each { |parts| @root.insert(parts, id, consumer) }
@@ -102,7 +102,6 @@ module Werkzeug
 
       def insert(parts, id, consumer)
         if parts.empty?
-          @consumers.delete(id)
           @consumers[id] = consumer
         else
           @nodes[parts.shift].insert(parts, id, consumer)
@@ -111,7 +110,7 @@ module Werkzeug
 
       def remove(ids)
         ids.each { |id| @consumers.delete(id) }
-        @nodes.each_value { |n| n.remove(ids) }
+        @nodes.each_value { |node| node.remove(ids) }
       end
 
       def remove_all(parts)
