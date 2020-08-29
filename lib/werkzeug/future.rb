@@ -3,11 +3,11 @@ require_relative 'error'
 
 module Werkzeug
   class Future
-    def initialize(*args, &block)
+    def initialize(*args, thread_pool: ThreadPool.default, &block)
       Error::NoBlockGiven.raise! unless block
       @value = @error = NOT_SET
       @lock, @args, @function = Mutex.new, args, block
-      ThreadPool.default.add(self)
+      thread_pool.add(self)
     end
 
     def wait
