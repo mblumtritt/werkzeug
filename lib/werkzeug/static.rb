@@ -41,6 +41,12 @@ module Werkzeug
       __attributes.index(attribute)
     end
 
+    def fetch(attribute, default = nil)
+      return send(attribute) if __attributes.index(attribute)
+      return yield(self, attribute) if block_given?
+      default
+    end
+
     def [](attribute)
       __attributes.index(attribute) ? send(attribute) : nil
     end
