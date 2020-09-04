@@ -5,15 +5,21 @@ require_relative 'error'
 module Werkzeug
   module Delegate
     private def delegate(
-      *method_names, to:, prefix: false, scope: :public, allow_nil: false
+      *method_names,
+      to:,
+      prefix: false,
+      target_prefix: false,
+      scope: :public,
+      allow_nil: false
     )
       Error::InvalidArgumentType.raise!(:to, to.inspect) unless to
       location = caller_locations(1, 1).first
       prefix = prefix ? "#{prefix == true ? to : prefix}_" : ''
+      target_prefix = target_prefix ? "#{target_prefix}_" : ''
       method_names.each do |name|
         code = "def #{prefix}#{name}(...);#{to}"
         code += '&' if allow_nil
-        code += ".#{name}(...);end"
+        code += ".#{target_prefix}#{name}(...);end"
         module_eval(code, location.path, location.lineno)
       end
       if scope == :private

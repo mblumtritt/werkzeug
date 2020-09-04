@@ -8,6 +8,7 @@ class DelegateTest < Test
     delegate :empty?, to: :@ary, prefix: 'is'
     delegate :to_a, to: :@ary, scope: :private
     delegate :at, to: :@ary, scope: :protected
+    delegate :h, to: :@ary, prefix: :as, target_prefix: :to
 
     attr_reader :ary
 
@@ -27,6 +28,9 @@ class DelegateTest < Test
     assert_same(42, subject.ary[100])
     assert_same(101, subject.size)
     refute(subject.is_empty?)
+
+    subject.ary.clear << %i[a b]
+    assert_equal({ a: :b }, subject.as_h)
   end
 
   def test_scoping
