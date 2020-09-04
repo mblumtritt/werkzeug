@@ -81,15 +81,17 @@ module Werkzeug
 
     def to_a(*only)
       return __attributes.map { |attribute| send(attribute) } if only.empty?
-      only.map { |name| __attributes.index(name) ? send(name) : nil }
+      attributes = __attributes
+      only.map { |name| attributes.index(name) ? send(name) : nil }
     end
 
     def to_h(*only)
       if only.empty?
         __attributes.each_with_object({}) { |name, ret| ret[name] = send(name) }
       else
+        attributes = __attributes
         only.each_with_object({}) do |name, ret|
-          ret[name] = send(name) if __attributes.index(name)
+          ret[name] = send(name) if attributes.index(name)
         end
       end
     end
