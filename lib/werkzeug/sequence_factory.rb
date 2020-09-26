@@ -23,5 +23,19 @@ module Werkzeug
     def self.random(*array)
       proc { array.sample }
     end
+
+    def self.linear(min, max, delta)
+      i = min
+      proc do
+        ret = i
+        i += delta
+        if i <= min
+          i, delta = min, -delta
+        elsif i >= max
+          i, delta = max, -delta
+        end
+        ret
+      end
+    end
   end
 end

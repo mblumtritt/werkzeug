@@ -39,4 +39,14 @@ class SequenceFactoryTest < Test
     subject = Werkzeug::SequenceFactory.random
     assert(Array.new(10, &subject).all?(&:nil?))
   end
+
+  def test_linear
+    subject = Werkzeug::SequenceFactory.linear(1, 4, 1)
+    expectation = [1, 2, 3, 4, 3, 2, 1, 2, 3, 4]
+    assert_equal(expectation, Array.new(10, &subject))
+
+    subject = Werkzeug::SequenceFactory.linear(1, 2, 0.25)
+    expectation = [1, 1.25, 1.5, 1.75, 2, 1.75, 1.5, 1.25, 1]
+    assert_equal(expectation, Array.new(9, &subject))
+  end
 end
