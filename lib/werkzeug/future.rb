@@ -3,10 +3,11 @@ require_relative 'error'
 
 module Werkzeug
   class Future
-    def initialize(*args, thread_pool: ThreadPool.default, &block)
+    def initialize(*args, thread_pool: ThreadPool.default, **opts, &block)
       Error::NoBlockGiven.raise! unless block
+      @function = ->{ block.call(*args, **opts) }
       @value = @error = NOT_SET
-      @lock, @args, @function = Mutex.new, args, block
+      @lock = Mutex.new
       thread_pool.add(self)
     end
 
@@ -49,11 +50,11 @@ module Werkzeug
     def chore
       return if avail?
       begin
-        @value = @function.call(*@args)
+        @value = @function.call
       rescue Exception => error
         @error = error
       ensure
-        @function = @args = nil
+        @function = nil
       end
     end
 
