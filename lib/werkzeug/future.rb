@@ -5,7 +5,7 @@ module Werkzeug
   class Future
     def initialize(*args, thread_pool: ThreadPool.default, **opts, &block)
       Error::NoBlockGiven.raise! unless block
-      @function = ->{ block.call(*args, **opts) }
+      @function = -> { block.call(*args, **opts) }
       @value = @error = NOT_SET
       @lock = Mutex.new
       thread_pool.add(self)
