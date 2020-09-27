@@ -42,43 +42,63 @@ module Werkzeug
     end
 
     module Linear
-      def self.create(from, to, delta)
-        delta = -delta if delta < 0
-        from < to ? Linear.up(from, to, delta) : Linear.down(from, to, delta)
-      end
-
-      def self.up(from, to, delta)
-        return proc { from } if from == to
-        i = from
-        proc do
-          ret = i
-          i = from if (i += delta) > to
-          ret
+      class << self
+        def create(from, to, delta)
+          return proc { from } if from == to
+          return up(from, to, delta.abs) if from < to
+          down(from, to, delta.abs)
         end
-      end
 
-      def self.down(from, to, delta)
-        return proc { from } if from == to
-        i = from
-        proc do
-          ret = i
-          i = from if (i -= delta) < to
-          ret
+        def ping_pong(from, to, delta)
+          return proc { from } if from == to
+          return ping(from, to, delta.abs) if from < to
+          pong(from, to, -delta.abs)
         end
-      end
 
-      def self.ping_pong(from, to, delta)
-        return proc { from } if from == to
-        i = from
-        proc do
-          ret = i
-          i += delta
-          if i <= from
-            i, delta = from, -delta
-          elsif i >= to
-            i, delta = to, -delta
+        private
+
+        def up(from, to, delta, i = from)
+          proc do
+            ret = i
+            i = from if (i += delta) > to
+            ret
           end
-          ret
+        end
+
+        def down(from, to, delta, i = from)
+          proc do
+            ret = i
+            i = from if (i -= delta) < to
+            ret
+          end
+        end
+
+        def ping(from, to, delta, i = from)
+          proc do
+            ret = i
+            i += delta
+            if i <= from
+              i, delta = from, -delta
+            elsif i >= to
+              i, delta = to, -delta
+            end
+            ret
+          end
+        end
+
+        def pong(from, to, delta, i = from)
+          proc do
+            ret = i
+            i += delta
+            if i < to
+              delta = -delta
+              i = to + delta
+            elsif i > from
+              delta = -delta
+              i = from + delta
+            end
+            ret
+          end
         end
       end
     end
