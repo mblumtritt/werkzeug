@@ -54,7 +54,7 @@ module Werkzeug
           windows
         ],
         cygwin: %w[cygwin] # must be last in the map!
-      }
+      }.freeze
 
       def check_type(type, name = self.name)
         MAP[type].any? { |mark| name.index(mark) }

@@ -54,7 +54,7 @@ module Werkzeug
       ret = @attr[name.to_s.chop.to_sym]
       ret = ret.call(*args) if defined?(ret.call)
       ret = ret ? true : false
-      return block ? block.call(ret) : ret
+      block ? block.call(ret) : ret
     end
 
     BASE_METHODS = %i[

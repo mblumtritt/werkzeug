@@ -4,13 +4,13 @@ require_relative 'error'
 module Werkzeug
   class ThreadPool
     def self.default
-      @pool ||= new.tap { |pool| at_exit { pool.join } }
+      @default ||= new.tap { |pool| at_exit { pool.join } }
     end
 
     attr_reader :max_size
 
     def initialize(max_size = Config.default_thread_count)
-      @max_size = 0 < max_size ? max_size : 0
+      @max_size = max_size.clamp(0, max_size)
       @threads, @queue, @lock = {}, Queue.new, Monitor.new
       @condition = @lock.new_cond
     end
