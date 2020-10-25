@@ -4,23 +4,24 @@ require_relative 'hash_inspection'
 
 module Werkzeug
   module StaticClassMethods
-    def attriibutes(*names)
-      names = names.freeze
-      self.class_eval { names.each { |name| attr_reader(name) } }
-      define_method(:__attributes) { names }
-      private(:__attributes)
+    def attriibutes(*names, **mapped_names)
+      attr_map = Hash[names.map { |name| [name, name] }].merge!(mapped_names)
+      class_eval { attr_map.each_key { |name| attr_reader(name) } }
+      if private_method_defined?(:__attributes)
+        new.__send__(:__attributes).merge!(attr_map)
+      else
+        private define_method(:__attributes) { attr_map }
+      end
     end
+    alias attriibute attriibutes
   end
 
   module Static
-    def self.new(*args, &block)
-      klass =
-        Class.new(args.first.is_a?(Class) ? args.shift : Object) do
-          include(Static)
-          attriibutes(*args)
-        end
-      klass.class_eval(&block) if block
-      klass
+    def self.new(*args, **mapped_names, &block)
+      Class.new(args.first.is_a?(Class) ? args.shift : Object) do
+        include(Static)
+        attriibutes(*args, **mapped_names)
+      end.tap { |ret| ret.class_eval(&block) if block }
     end
 
     def self.included(base)
@@ -31,42 +32,43 @@ module Werkzeug
 
     def initialize(attributes = {})
       super()
-      __attributes.each do |name|
-        value = attributes.key?(name) ? attributes[name] : nil
+      __attributes.each_pair do |name, sname|
+        value = attributes.key?(sname) ? attributes[sname] : nil
         instance_variable_set("@#{name}", value)
       end
+      @__hash = nil
     end
 
     def attr?(attribute)
-      __attributes.index(attribute)
+      __attributes.key?(attribute)
     end
 
     def fetch(attribute, default = nil)
-      return send(attribute) if __attributes.index(attribute)
+      return send(attribute) if __attributes.key?(attribute)
       return yield(self, attribute) if block_given?
       default
     end
 
     def [](attribute)
-      __attributes.index(attribute) ? send(attribute) : nil
+      __attributes.key?(attribute) ? send(attribute) : nil
     end
 
     def each_pair
       return to_enum(__method__) unless block_given?
-      __attributes.each { |name| yield(name, send(name)) }
+      __attributes.each_key { |name| yield(name, send(name)) }
     end
 
     def update(new_attributes)
-      self.class.new(
-        __attributes.each_with_object({}) do |name, ret|
-          ret[name] =
-            new_attributes.key?(name) ? new_attributes[name] : send(name)
-        end
-      )
+      args = {}
+      __attributes.each_pair do |name, sname|
+        args[sname] =
+          new_attributes.key?(name) ? new_attributes[name] : send(name)
+      end
+      self.class.new(args)
     end
 
     def ==(other)
-      __attributes.all? do |name|
+      __attributes.keys.all? do |name|
         other.respond_to?(name) && send(name) == other.send(name)
       end
     end
@@ -76,28 +78,28 @@ module Werkzeug
     end
 
     def hash
-      (to_a << self.class).hash
+      @__hash ||= (to_a << self.class).hash
     end
 
     def to_a(*only)
-      return __attributes.map { |attribute| send(attribute) } if only.empty?
+      return __attributes.keys.map! { |name| send(name) } if only.empty?
       attributes = __attributes
-      only.map { |name| attributes.index(name) ? send(name) : nil }
+      only.map { |name| attributes.key?(name) ? send(name) : nil }
     end
 
     def to_h(*only)
       if only.empty?
-        __attributes.each_with_object({}) { |name, ret| ret[name] = send(name) }
+        __attributes.keys.each_with_object({}) do |name, ret|
+          ret[name] = send(name)
+        end
       else
         attributes = __attributes
         only.each_with_object({}) do |name, ret|
-          ret[name] = send(name) if attributes.index(name)
+          ret[name] = send(name) if attributes.key?(name)
         end
       end
     end
 
-    def to_s
-      inspect
-    end
+    alias to_s inspect
   end
 end

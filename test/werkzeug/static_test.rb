@@ -2,11 +2,19 @@ require_relative '../test_helper'
 
 class StaticTest < Test
   SampleClass =
-    Werkzeug::Static.new(:a, :b) do
+    Werkzeug::Static.new(:a, b: 'd') do
       def c
         :c
       end
     end
+
+  class ExtendedSampleClass
+    include(Werkzeug::Static)
+
+    attriibutes :a, :b
+    attriibute c: :d
+    attriibute d: :e
+  end
 
   def test_defaults
     subject = SampleClass.new
@@ -31,7 +39,7 @@ class StaticTest < Test
   end
 
   def test_attributes
-    subject = SampleClass.new(a: 42, b: :some)
+    subject = SampleClass.new(a: 42, 'd' => :some)
 
     assert_same(42, subject.a)
     assert_same(:some, subject.b)
@@ -43,7 +51,7 @@ class StaticTest < Test
     assert_instance_of(Enumerator, subject.each_pair)
     assert_equal([[:a, 42], %i[b some]], subject.each_pair.to_a)
 
-    another = SampleClass.new(a: 42, b: :some)
+    another = SampleClass.new(a: 42, 'd' => :some)
     assert(subject == another)
     assert(subject.eql?(another))
     assert_same(another.hash, subject.hash)
@@ -53,7 +61,7 @@ class StaticTest < Test
   end
 
   def test_update
-    subject = SampleClass.new(a: 21, b: :b)
+    subject = SampleClass.new(a: 21, 'd' => :b)
 
     assert_same(21, subject.a)
     assert_same(:b, subject.b)
@@ -61,5 +69,14 @@ class StaticTest < Test
     updated = subject.update(a: :a, b: nil)
     assert_same(:a, updated.a)
     assert_nil(updated.b)
+  end
+
+  def test_attribute_extension
+    subject = ExtendedSampleClass.new(a: 1, b: 2, d: 3, e: 4)
+
+    assert_same(1, subject.a)
+    assert_same(2, subject.b)
+    assert_same(3, subject.c)
+    assert_same(4, subject.d)
   end
 end
