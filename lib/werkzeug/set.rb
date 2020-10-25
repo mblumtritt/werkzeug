@@ -20,11 +20,11 @@ module Werkzeug
       @items = {}
       if key_gen_proc
         @as_key = key_gen_proc
+        @items.compare_by_identity if compare_by_identity
       else
         @as_key = :__id__.to_proc
-        compare_by_identity = true
+        @items.compare_by_identity
       end
-      @items.compare_by_identity if compare_by_identity
       merge!(enum) if enum
     end
 
@@ -156,14 +156,14 @@ module Werkzeug
     end
     alias & intersection
 
-    def ^(enum)
-      ret = create_with(enum)
+    def ^(other)
+      ret = create_with(other)
       each { |obj| ret.add(obj) unless ret.delete?(obj) }
       ret
     end
 
     def ==(other)
-      self.equal?(other) ? true : to_a == as_ary(other)
+      equal?(other) ? true : to_a == as_ary(other)
     end
 
     private
