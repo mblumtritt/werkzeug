@@ -1,24 +1,27 @@
 # frozen_string_literal: true
 
 module Werkzeug
-  ROOT = __FILE__[0..-4]
-  autoload :Config, "#{ROOT}/config"
-  autoload :Context, "#{ROOT}/context"
-  autoload :CustomExceptions, "#{ROOT}/custom_exceptions"
-  autoload :DataFile, "#{ROOT}/data_file"
-  autoload :Delegate, "#{ROOT}/delegate"
-  autoload :Events, "#{ROOT}/events"
-  autoload :Future, "#{ROOT}/future"
-  autoload :HashInspction, "#{ROOT}/hash_inspection"
-  autoload :HostOS, "#{ROOT}/host_os"
-  autoload :PidFile, "#{ROOT}/pid_file"
-  autoload :ThreadPool, "#{ROOT}/thread_pool"
-  autoload :Set, "#{ROOT}/set"
-  autoload :Static, "#{ROOT}/static"
-  autoload :SequenceFactory, "#{ROOT}/sequence_factory"
-  autoload :ToolFunctions, "#{ROOT}/tool_functions"
-  autoload :PrefixedCalls, "#{ROOT}/prefixed_calls"
-  autoload :VERSION, "#{ROOT}/version"
+  lazy_load = lambda do |n, f = n.to_s.downcase|
+    autoload(n, File.join(__dir__, 'werkzeug', f))
+  end
+
+  lazy_load[:Config]
+  lazy_load[:Context]
+  lazy_load[:CustomExceptions, 'custom_exceptions']
+  lazy_load[:DataFile, 'data_file']
+  lazy_load[:Delegate]
+  lazy_load[:Events]
+  lazy_load[:Future]
+  lazy_load[:HashInspection, 'hash_inspection']
+  lazy_load[:HostOS, 'host_os']
+  lazy_load[:PidFile, 'pid_file']
+  lazy_load[:PrefixedCalls, 'prefixed_calls']
+  lazy_load[:SequenceFactory, 'sequence_factory']
+  lazy_load[:Set]
+  lazy_load[:Static]
+  lazy_load[:ThreadPool, 'thread_pool']
+  lazy_load[:ToolFunctions, 'tool_functions']
+  lazy_load[:VERSION]
 
   def self.load!
     constants.each { |const| fn = autoload?(const) and require(fn) }
