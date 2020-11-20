@@ -79,4 +79,11 @@ class StaticTest < Test
     assert_same(3, subject.c)
     assert_same(4, subject.d)
   end
+
+  def test_on_the_fly
+    subject = Werkzeug.create_static(:a, b: 'd').new(a: 42, 'd' => :some)
+
+    assert_same(42, subject.a)
+    assert_same(:some, subject.b)
+  end
 end
