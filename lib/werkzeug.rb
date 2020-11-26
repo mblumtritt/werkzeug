@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Werkzeug
-  lazy_load = lambda do |n, f = n.to_s.downcase|
-    autoload(n, File.join(__dir__, 'werkzeug', f))
+  lazy_load = lambda do |name, fname = name.to_s.downcase|
+    autoload(name, File.expand_path("werkzeug/#{fname}", __dir__))
   end
 
   lazy_load[:Config]
@@ -24,7 +24,7 @@ module Werkzeug
   lazy_load[:VERSION]
 
   def self.load!
-    constants.each { |const| fn = autoload?(const) and require(fn) }
+    constants.each { |const| fname = autoload?(const) and require(fname) }
   end
 
   def self.configure

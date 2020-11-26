@@ -3,7 +3,7 @@ require_relative 'error'
 module Werkzeug
   module ToolFunctions
     def enum(*args, start: 0)
-      names = tf_constant_names_of(args)
+      names = __constant_names_of(args)
       ret = Module.new
       names.each_with_index { |name, i| ret.const_set(name, start + i) }
       ret
@@ -17,7 +17,7 @@ module Werkzeug
     end
 
     def bits(*args)
-      names = tf_constant_names_of(args)
+      names = __constant_names_of(args)
       ret = Module.new
       names.each_with_index { |name, i| ret.const_set(name, 1 << i) }
       ret
@@ -25,10 +25,9 @@ module Werkzeug
 
     private
 
-    def tf_constant_names_of(args)
+    def __constant_names_of(args)
       Error::NoArgument.raise! if args.empty?
-      names = args.map(&:to_sym)
-      names.uniq!
+      names = args.uniq.map!(&:to_sym)
       return names if names.size == args.size
       Error::DoublicateArgumentNames.raise!(args.inspect)
     end

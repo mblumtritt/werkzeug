@@ -32,7 +32,7 @@ module Werkzeug
         lines.each_line do |line|
           next content << line unless line.start_with?('@@ ')
           ret[name] = content.join
-          name, content = line.chomp[3..].to_sym, []
+          name, content = line.chomp.delete_prefix('@@ ').to_sym, []
         end
         ret[name] = content.join
         ret

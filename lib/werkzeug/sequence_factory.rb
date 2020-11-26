@@ -7,8 +7,7 @@ module Werkzeug
       i = 0
       proc do
         ret = array[i]
-        i += 1
-        i = 0 if i == array.size
+        i = 0 if (i += 1) == array.size
         ret
       end
     end
@@ -18,8 +17,7 @@ module Werkzeug
       i, d = 0, 1
       proc do
         ret = array[i]
-        i += d
-        d = -d if i == array.size - 1 || i == 0
+        d = -d if (i += d) == array.size - 1 || i == 0
         ret
       end
     end
@@ -76,8 +74,7 @@ module Werkzeug
         def ping(from, to, delta, i = from)
           proc do
             ret = i
-            i += delta
-            if i <= from
+            if (i += delta) <= from
               i, delta = from, -delta
             elsif i >= to
               i, delta = to, -delta
@@ -89,8 +86,7 @@ module Werkzeug
         def pong(from, to, delta, i = from)
           proc do
             ret = i
-            i += delta
-            if i < to
+            if (i += delta) < to
               delta = -delta
               i = to + delta
             elsif i > from
