@@ -11,9 +11,9 @@ class StaticTest < Test
   class ExtendedSampleClass
     include(Werkzeug::Static)
 
-    attriibutes :a, :b
-    attriibute c: :d
-    attriibute d: :e
+    attributes :a, :b
+    attribute c: :d
+    attribute d: :e
   end
 
   def test_defaults
@@ -39,7 +39,7 @@ class StaticTest < Test
   end
 
   def test_attributes
-    subject = SampleClass.new(a: 42, 'd' => :some)
+    subject = SampleClass.new(:a => 42, 'd' => :some)
 
     assert_same(42, subject.a)
     assert_same(:some, subject.b)
@@ -51,7 +51,7 @@ class StaticTest < Test
     assert_instance_of(Enumerator, subject.each_pair)
     assert_equal([[:a, 42], %i[b some]], subject.each_pair.to_a)
 
-    another = SampleClass.new(a: 42, 'd' => :some)
+    another = SampleClass.new(:a => 42, 'd' => :some)
     assert(subject == another)
     assert(subject.eql?(another))
     assert_same(another.hash, subject.hash)
@@ -61,7 +61,7 @@ class StaticTest < Test
   end
 
   def test_update
-    subject = SampleClass.new(a: 21, 'd' => :b)
+    subject = SampleClass.new(:a => 21, 'd' => :b)
 
     assert_same(21, subject.a)
     assert_same(:b, subject.b)
@@ -81,7 +81,7 @@ class StaticTest < Test
   end
 
   def test_on_the_fly
-    subject = Werkzeug.create_static(:a, b: 'd').new(a: 42, 'd' => :some)
+    subject = Werkzeug.create_static(:a, b: 'd').new(:a => 42, 'd' => :some)
 
     assert_same(42, subject.a)
     assert_same(:some, subject.b)

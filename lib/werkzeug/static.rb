@@ -4,7 +4,7 @@ require_relative 'hash_inspection'
 
 module Werkzeug
   module StaticClassMethods
-    def attriibutes(*names, **mapped_names)
+    def attributes(*names, **mapped_names)
       attr_map = Hash[names.map { |name| [name, name] }].merge!(mapped_names)
       class_eval { attr_map.each_key { |name| attr_reader(name) } }
       if private_method_defined?(:__attributes)
@@ -13,15 +13,18 @@ module Werkzeug
         private define_method(:__attributes) { attr_map }
       end
     end
-    alias attriibute attriibutes
+    alias attribute attributes
   end
 
   module Static
     def self.new(*args, **mapped_names, &block)
-      Class.new(args.first.is_a?(Class) ? args.shift : Object) do
-        include(Static)
-        attriibutes(*args, **mapped_names)
-      end.tap { |ret| ret.class_eval(&block) if block }
+      ret =
+        Class.new(args.first.is_a?(Class) ? args.shift : Object) do
+          include(Static)
+          attributes(*args, **mapped_names)
+        end
+      ret.class_eval(&block) if block
+      ret
     end
 
     def self.included(base)
@@ -89,9 +92,9 @@ module Werkzeug
 
     def to_h(*only)
       if only.empty?
-        __attributes.keys.each_with_object({}) do |name, ret|
-          ret[name] = send(name)
-        end
+        __attributes
+          .keys
+          .each_with_object({}) { |name, ret| ret[name] = send(name) }
       else
         attributes = __attributes
         only.each_with_object({}) do |name, ret|
