@@ -47,32 +47,32 @@ module Werkzeug
     end
 
     def fetch(attribute, default = nil)
-      return send(attribute) if __attributes.key?(attribute)
+      return __send__(attribute) if __attributes.key?(attribute)
       return yield(self, attribute) if block_given?
       default
     end
 
     def [](attribute)
-      __attributes.key?(attribute) ? send(attribute) : nil
+      __attributes.key?(attribute) ? __send__(attribute) : nil
     end
 
     def each_pair
       return to_enum(__method__) unless block_given?
-      __attributes.each_key { |name| yield(name, send(name)) }
+      __attributes.each_key { |name| yield(name, __send__(name)) }
     end
 
     def update(new_attributes)
       args = {}
       __attributes.each_pair do |name, sname|
         args[sname] =
-          new_attributes.key?(name) ? new_attributes[name] : send(name)
+          new_attributes.key?(name) ? new_attributes[name] : __send__(name)
       end
       self.class.new(args)
     end
 
     def ==(other)
       __attributes.keys.all? do |name|
-        other.respond_to?(name) && send(name) == other.send(name)
+        other.respond_to?(name) && __send__(name) == other.__send__(name)
       end
     end
 
@@ -85,20 +85,20 @@ module Werkzeug
     end
 
     def to_a(*only)
-      return __attributes.keys.map! { |name| send(name) } if only.empty?
+      return __attributes.keys.map! { |name| __send__(name) } if only.empty?
       attributes = __attributes
-      only.map { |name| attributes.key?(name) ? send(name) : nil }
+      only.map { |name| attributes.key?(name) ? __send__(name) : nil }
     end
 
     def to_h(*only)
       if only.empty?
         __attributes
           .keys
-          .each_with_object({}) { |name, ret| ret[name] = send(name) }
+          .each_with_object({}) { |name, ret| ret[name] = __send__(name) }
       else
         attributes = __attributes
         only.each_with_object({}) do |name, ret|
-          ret[name] = send(name) if attributes.key?(name)
+          ret[name] = __send__(name) if attributes.key?(name)
         end
       end
     end

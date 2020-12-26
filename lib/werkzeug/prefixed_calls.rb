@@ -6,7 +6,7 @@ module Werkzeug
       methods
         .select { |name| name.to_s.start_with?(*prefixes) }
         .sort!
-        .each { |name| send(name, ...) }
+        .each { |name| __send__(name, ...) }
       self
     end
   end
