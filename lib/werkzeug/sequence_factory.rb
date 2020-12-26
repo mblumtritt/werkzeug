@@ -23,7 +23,8 @@ module Werkzeug
     end
 
     def self.random(*array)
-      array.empty? ? proc {} : proc { array.sample }
+      max = array.size - 1
+      max < 0 ? proc {} : proc { array[Random.rand(max)] }
     end
 
     def self.linear(*args)
