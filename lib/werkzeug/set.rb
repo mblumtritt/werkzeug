@@ -62,7 +62,7 @@ module Werkzeug
     alias to_a items
 
     def add(obj)
-      @items[@as_key[obj]] = obj
+      @items[@as_key.call(obj)] = obj
     end
 
     def <<(obj)
@@ -71,16 +71,16 @@ module Werkzeug
     end
 
     def include?(obj)
-      @items.key?(@as_key[obj])
+      @items.key?(@as_key.call(obj))
     end
     alias member? include?
 
     def delete(obj)
-      @items.delete(@as_key[obj])
+      @items.delete(@as_key.call(obj))
     end
 
     def delete?(obj)
-      key = @as_key[obj]
+      key = @as_key.call(obj)
       return false unless @items.key?(key)
       @items.delete(key)
       true
