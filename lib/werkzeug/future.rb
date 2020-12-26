@@ -12,7 +12,7 @@ module Werkzeug
     end
 
     def wait
-      @lock.synchronize { chore } unless avail?
+      @lock.synchronize { chore } if @function
       self
     end
 
@@ -29,7 +29,7 @@ module Werkzeug
     end
 
     def avail?
-      value? || error?
+      @function.nil?
     end
 
     def call
@@ -48,14 +48,11 @@ module Werkzeug
     end
 
     def chore
-      return if avail?
-      begin
-        @value = @function.call
-      rescue Exception => error
-        @error = error
-      ensure
-        @function = nil
-      end
+      @value = @function.call if @function
+    rescue Exception => error
+      @error = error
+    ensure
+      @function = nil
     end
 
     NOT_SET = BasicObject.new
