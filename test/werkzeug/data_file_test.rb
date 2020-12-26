@@ -12,8 +12,7 @@ class DataFileTest < Test
   end
 
   def test_parse_files
-    result =
-      Werkzeug::DataFile.parse <<~end
+    result = Werkzeug::DataFile.parse <<~end
         default_line_1
         default_line_2
         default_line_3

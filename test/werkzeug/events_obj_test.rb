@@ -19,7 +19,11 @@ class EventsObjTest < Test
     @events = Werkzeug::Events.new
     @events.register(
       @consumer,
-      zero: '*', one: 'a.b.c', two: '*.b.c', three: 'a.b.*', four: 'a.*.c'
+      zero: '*',
+      one: 'a.b.c',
+      two: '*.b.c',
+      three: 'a.b.*',
+      four: 'a.*.c'
     )
   end
 

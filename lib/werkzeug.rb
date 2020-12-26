@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module Werkzeug
-  lazy_load = lambda do |name, fname = name.to_s.downcase|
-    autoload(name, File.expand_path("werkzeug/#{fname}", __dir__))
-  end
+  lazy_load =
+    lambda do |name, fname = name.to_s.downcase, rel = __dir__|
+      autoload(name, File.expand_path("werkzeug/#{fname}", rel))
+    end
 
   lazy_load[:Config]
   lazy_load[:Context]

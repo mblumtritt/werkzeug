@@ -10,7 +10,7 @@ module Werkzeug
     attr_reader :max_size
 
     def initialize(max_size = Config.default_thread_count)
-      @max_size = max_size.clamp(0, max_size)
+      @max_size = max_size.clamp(1, max_size)
       @threads, @queue, @lock = {}, Queue.new, Monitor.new
       @condition = @lock.new_cond
     end

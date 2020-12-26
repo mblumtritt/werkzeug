@@ -31,6 +31,10 @@ class PrefixedCallsTest < Test
     def _setup_foo
       @called << __method__
     end
+
+    def args(*args, **opts, &block)
+      @called << args << opts << block
+    end
   end
 
   def setup
@@ -53,13 +57,16 @@ class PrefixedCallsTest < Test
 
   def test_not_existing
     expected = %i[methods]
+
     @subject.call_all(:update)
     assert_equal(expected, @subject.called)
   end
 
   def test_forward_arguments
-    assert_raises_message(ArgumentError, 'given 3, expected 0') do
-      @subject.call_all(:setup, 1, 2, 3)
-    end
+    block = -> {  }
+    expected = [:methods, [1, 2, 3], { a: 1, b: 2 }, block]
+
+    @subject.call_all(:args, 1, 2, 3, a: 1, b: 2, &block)
+    assert_equal(expected, @subject.called)
   end
 end

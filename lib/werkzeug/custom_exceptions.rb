@@ -8,7 +8,7 @@ module Werkzeug
 
     def create_exception(parent = nil, format)
       Class.new(appropriate_parent(parent)) do
-        const_set(:MESSAGE_FORMAT, format.to_s.dup.freeze)
+        const_set(:MESSAGE_FORMAT, String.new(format.to_s).freeze)
         extend(Extensions)
       end
     end

@@ -18,7 +18,8 @@ module Werkzeug
     end
 
     def define(attribute, &block)
-      @attr[attribute.to_s.to_sym] = block
+      attribute = attribute.to_s.to_sym unless attribute.is_a?(::Symbol)
+      @attr[attribute] = block
     end
 
     def attr
