@@ -3,7 +3,7 @@
 require_relative 'delegate'
 
 module Werkzeug
-  class Context < BasicObject
+  class Context
     extend Delegate
 
     def self.default

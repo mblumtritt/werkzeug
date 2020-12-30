@@ -11,20 +11,10 @@ module Werkzeug
         @type ||= MAP.keys.find { |type| check_type(type) }
       end
 
-      def linux?
-        type == :linux
-      end
-
-      def mac_os?
-        type == :mac_os
-      end
-
-      def windows?
-        type == :windows
-      end
-
-      def unix?
-        type == :unix
+      %i[linux mac_os windows unix].each do |name|
+        define_method("#{name}?") do
+          type == name
+        end
       end
 
       def unix_like?
