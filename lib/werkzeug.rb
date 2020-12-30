@@ -20,6 +20,7 @@ module Werkzeug
   lazy_load[:SequenceFactory, 'sequence_factory']
   lazy_load[:Set]
   lazy_load[:Static]
+  lazy_load[:Terminal]
   lazy_load[:ThreadPool, 'thread_pool']
   lazy_load[:ToolFunctions, 'tool_functions']
   lazy_load[:VERSION]
@@ -58,6 +59,10 @@ module Werkzeug
 
   def self.temp_dir
     HostOS.temp_dir
+  end
+
+  def self.terminal
+    Terminal
   end
 
   def self.thread_pool
