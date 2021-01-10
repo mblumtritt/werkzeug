@@ -16,7 +16,11 @@ module Werkzeug
   lazy_load[:HashInspection, 'hash_inspection']
   lazy_load[:HostOS, 'host_os']
   lazy_load[:PidFile, 'pid_file']
-  lazy_load[:PrefixedCalls, 'prefixed_calls']
+  if RUBY_VERSION.start_with?('3')
+    lazy_load[:PrefixedCalls, 'prefixed_calls']
+  else
+    lazy_load[:PrefixedCalls, 'prefixed_calls_comp']
+  end
   lazy_load[:SequenceFactory, 'sequence_factory']
   lazy_load[:Set]
   lazy_load[:Static]
