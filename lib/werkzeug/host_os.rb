@@ -12,9 +12,7 @@ module Werkzeug
       end
 
       %i[linux mac_os windows unix].each do |name|
-        define_method("#{name}?") do
-          type == name
-        end
+        define_method("#{name}?") { type == name }
       end
 
       def unix_like?

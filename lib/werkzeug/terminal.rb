@@ -47,4 +47,3 @@ module Werkzeug
     @width = nil
   end
 end
-

@@ -76,6 +76,10 @@ module Werkzeug
   def self.create_sequence
     SequenceFactory
   end
+
+  def self.sequence
+    SequenceFactory
+  end
 end
 
 Werkzeug::TOP = self
